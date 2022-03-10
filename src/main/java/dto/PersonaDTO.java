@@ -1,8 +1,12 @@
 package dto;
 
+import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +21,15 @@ public class PersonaDTO {
 	private int idPersona;
 	private String nombre;
 	private String telefono;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private DomicilioDTO domicilio;
+
+	private String email;
+	private Date nacimiento;
+
+	@OneToOne
+	private TipoContacto tipoContacto;
 
 	public PersonaDTO(int idPersona, String nombre, String telefono)
 	{
