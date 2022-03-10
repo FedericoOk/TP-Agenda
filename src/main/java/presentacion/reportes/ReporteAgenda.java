@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -23,7 +24,7 @@ public class ReporteAgenda
 	private JasperReport reporte;
 	private JasperViewer reporteViewer;
 	private JasperPrint	reporteLleno;
-	private Logger log = Logger.getLogger(ReporteAgenda.class);
+	private Logger log = LogManager.getLogger(ReporteAgenda.class);
 	//Recibe la lista de personas para armar el reporte
     public ReporteAgenda(List<PersonaDTO> personas)
     {
