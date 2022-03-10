@@ -55,3 +55,6 @@ resources/templates/fonts/**
 dist
 **/vscode.d.ts
 **/vscode.proposed.d.ts
+
+# VSCode
+.vscode/*

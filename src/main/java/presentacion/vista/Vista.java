@@ -16,6 +16,7 @@ import dto.PersonaDTO;
 import javax.swing.JButton;
 
 import persistencia.conexion.Conexion;
+import persistencia.conexion.EntityManagers;
 
 public class Vista
 {
@@ -89,8 +90,9 @@ public class Vista
 		             "Confirmación", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {
-		        	Conexion.getConexion().cerrarConexion();
-		           System.exit(0);
+		        	Conexion.getConexion().cerrarConexion(); // TODO: ¿Esto no se debería pasar como argumento en el controller?
+					EntityManagers.close();
+		           	System.exit(0);
 		        }
 		    }
 		});
