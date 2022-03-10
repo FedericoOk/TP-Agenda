@@ -1,7 +1,19 @@
 package dto;
 
-public class PersonaDTO 
-{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@NoArgsConstructor
+@Data
+public class PersonaDTO {
+
+	@Id
+	@GeneratedValue
 	private int idPersona;
 	private String nombre;
 	private String telefono;
@@ -42,4 +54,5 @@ public class PersonaDTO
 	{
 		this.telefono = telefono;
 	}
+
 }
