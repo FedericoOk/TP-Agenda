@@ -5,20 +5,16 @@ import javax.swing.JButton;
 public class VentanaPersonaInsert extends VentanaPersonaBase 
 {
 
-	// private static VentanaPersona INSTANCE; // TODO: mejor dejarlo como singleton
+	private static VentanaPersonaInsert INSTANCE;
 
-	// public static VentanaPersona getInstance()
-	// {
-	// 	if(INSTANCE == null)
-	// 	{
-	// 		INSTANCE = new VentanaPersona(); 	
-	// 		return new VentanaPersona();
-	// 	}
-	// 	else
-	// 		return INSTANCE;
-	// }
+	public static VentanaPersonaInsert getInstance()
+	{
+		if (INSTANCE == null)
+			INSTANCE = new VentanaPersonaInsert(); 
+		return INSTANCE;
+	}
 
-	VentanaPersonaInsert() 
+	private VentanaPersonaInsert()
 	{
 		super();
 		

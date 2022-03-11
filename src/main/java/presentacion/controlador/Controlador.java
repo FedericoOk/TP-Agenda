@@ -4,13 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import dto.PersonaDTO;
 import modelo.Agenda;
 import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersonaInsert;
-import presentacion.vista.VentanaPersonaBase;
 import presentacion.vista.VentanaPersonaUpdate;
 import presentacion.vista.Vista;
-import dto.PersonaDTO;
 
 public class Controlador implements ActionListener
 {
@@ -30,8 +29,8 @@ public class Controlador implements ActionListener
 			this.vista.getBtnReporte().addActionListener(r->mostrarReporte(r));
 
 			// Ventana Persona mapping
-			this.ventanaPersonaInsert = (VentanaPersonaInsert) VentanaPersonaBase.getInstance(VentanaPersonaInsert.class);
-			this.ventanaPersonaUpdate = (VentanaPersonaUpdate) VentanaPersonaBase.getInstance(VentanaPersonaUpdate.class);
+			this.ventanaPersonaInsert = VentanaPersonaInsert.getInstance();
+			this.ventanaPersonaUpdate = VentanaPersonaUpdate.getInstance();
 			this.ventanaPersonaInsert.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
 			this.ventanaPersonaUpdate.getBtnEditarPersona().addActionListener(p->editarPersona(p));
 			this.agenda = agenda;

@@ -14,14 +14,6 @@ public class VentanaPersonaBase extends JFrame
 	protected JTextField txtNombre;
 	protected JTextField txtTelefono;
 	protected JButton btnAceptar;
-	
-	public static VentanaPersonaBase getInstance(Class<?> clazz)
-	{
-		if (clazz == VentanaPersonaInsert.class)
-			return new VentanaPersonaInsert();
-		else
-			return new VentanaPersonaUpdate();
-	}
 
 	protected VentanaPersonaBase() 
 	{

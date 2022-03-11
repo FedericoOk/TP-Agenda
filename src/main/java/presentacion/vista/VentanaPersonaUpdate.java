@@ -2,9 +2,19 @@ package presentacion.vista;
 
 import javax.swing.JButton;
 
-public class VentanaPersonaUpdate extends VentanaPersonaBase // TODO: mejor dejarlo como singleton
+public class VentanaPersonaUpdate extends VentanaPersonaBase
 {
-	VentanaPersonaUpdate() 
+	
+	private static VentanaPersonaUpdate INSTANCE;
+
+	public static VentanaPersonaUpdate getInstance()
+	{
+		if (INSTANCE == null)
+			INSTANCE = new VentanaPersonaUpdate(); 
+		return INSTANCE;
+	}
+
+	private VentanaPersonaUpdate() 
 	{
 		super();
 		
