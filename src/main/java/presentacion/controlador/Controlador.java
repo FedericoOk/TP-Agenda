@@ -2,6 +2,7 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 import dto.PersonaDTO;
@@ -41,13 +42,16 @@ public class Controlador implements ActionListener
 		}
 
 		private void ventanaEditarPersona(ActionEvent a) {
-			this.ventanaPersonaUpdate.mostrarVentana();
+			PersonaDTO personaAEditar = obtenerPersonaSeleccionada();
+			this.ventanaPersonaUpdate.mostrarVentana(personaAEditar);
 		}
 
 		private void guardarPersona(ActionEvent p) {
 			String nombre = this.ventanaPersonaInsert.getTxtNombre().getText();
 			String tel = this.ventanaPersonaInsert.getTxtTelefono().getText();
-			PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel);
+			String email = this.ventanaPersonaInsert.getTxtEmail().getText();
+			Date nacimiento = this.ventanaPersonaInsert.getDateChooser().getDate();
+			PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel, email, nacimiento);
 			this.agenda.agregarPersona(nuevaPersona);
 			this.refrescarTabla();
 			this.ventanaPersonaInsert.cerrar();
@@ -56,9 +60,13 @@ public class Controlador implements ActionListener
 		private void editarPersona(ActionEvent p) {
 			String nombre = this.ventanaPersonaUpdate.getTxtNombre().getText();
 			String tel = this.ventanaPersonaUpdate.getTxtTelefono().getText();
+			String email = this.ventanaPersonaUpdate.getTxtEmail().getText();
+			Date nacimiento = this.ventanaPersonaUpdate.getDateChooser().getDate();
 			PersonaDTO persona = obtenerPersonaSeleccionada();
 			persona.setNombre(nombre);
 			persona.setTelefono(tel);
+			persona.setEmail(email);
+			persona.setNacimiento(nacimiento);
 			this.agenda.actualizarPersona(persona);
 			this.refrescarTabla();
 			this.ventanaPersonaUpdate.cerrar();
