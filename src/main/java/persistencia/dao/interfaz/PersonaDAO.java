@@ -6,8 +6,9 @@ import dto.PersonaDTO;
 
 public interface PersonaDAO 
 {
-	
 	public boolean insert(PersonaDTO persona);
+
+	public PersonaDTO update(PersonaDTO persona);
 
 	public boolean delete(PersonaDTO persona_a_eliminar);
 	

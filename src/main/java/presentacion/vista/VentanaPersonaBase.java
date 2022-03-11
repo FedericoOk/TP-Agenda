@@ -7,27 +7,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class VentanaPersona extends JFrame 
+public class VentanaPersonaBase extends JFrame 
 {
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField txtNombre;
-	private JTextField txtTelefono;
-	private JButton btnAgregarPersona;
-	private static VentanaPersona INSTANCE;
+	protected static final long serialVersionUID = 1L;
+	protected JPanel contentPane;
+	protected JTextField txtNombre;
+	protected JTextField txtTelefono;
+	protected JButton btnAceptar;
 	
-	public static VentanaPersona getInstance()
+	public static VentanaPersonaBase getInstance(Class<?> clazz)
 	{
-		if(INSTANCE == null)
-		{
-			INSTANCE = new VentanaPersona(); 	
-			return new VentanaPersona();
-		}
+		if (clazz == VentanaPersonaInsert.class)
+			return new VentanaPersonaInsert();
 		else
-			return INSTANCE;
+			return new VentanaPersonaUpdate();
 	}
 
-	private VentanaPersona() 
+	protected VentanaPersonaBase() 
 	{
 		super();
 		
@@ -61,9 +57,9 @@ public class VentanaPersona extends JFrame
 		panel.add(txtTelefono);
 		txtTelefono.setColumns(10);
 		
-		btnAgregarPersona = new JButton("Agregar");
-		btnAgregarPersona.setBounds(208, 92, 89, 23);
-		panel.add(btnAgregarPersona);
+		btnAceptar = new JButton();
+		btnAceptar.setBounds(208, 92, 89, 23);
+		panel.add(btnAceptar);
 		
 		this.setVisible(false);
 	}
@@ -83,10 +79,10 @@ public class VentanaPersona extends JFrame
 		return txtTelefono;
 	}
 
-	public JButton getBtnAgregarPersona() 
-	{
-		return btnAgregarPersona;
-	}
+	// public JButton btnAceptar() 
+	// {
+	// 	return btnAceptar;
+	// }
 
 	public void cerrar()
 	{

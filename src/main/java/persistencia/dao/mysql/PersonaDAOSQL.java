@@ -27,6 +27,14 @@ public class PersonaDAOSQL implements PersonaDAO { // TODO: hacer DAO<T>
 			return false;
 		}
 	}
+
+	@Override
+	public PersonaDTO update(PersonaDTO persona) {
+		entityManager.getTransaction().begin();
+		entityManager.merge(persona);
+		entityManager.getTransaction().commit();
+		return persona;
+	}
 	
 	public boolean delete(PersonaDTO persona_a_eliminar)
 	{

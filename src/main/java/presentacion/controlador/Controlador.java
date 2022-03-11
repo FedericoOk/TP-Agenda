@@ -6,7 +6,9 @@ import java.util.List;
 
 import modelo.Agenda;
 import presentacion.reportes.ReporteAgenda;
-import presentacion.vista.VentanaPersona;
+import presentacion.vista.VentanaPersonaInsert;
+import presentacion.vista.VentanaPersonaBase;
+import presentacion.vista.VentanaPersonaUpdate;
 import presentacion.vista.Vista;
 import dto.PersonaDTO;
 
@@ -14,31 +16,53 @@ public class Controlador implements ActionListener
 {
 		private Vista vista;
 		private List<PersonaDTO> personasEnTabla;
-		private VentanaPersona ventanaPersona; 
+		private VentanaPersonaInsert ventanaPersonaInsert;
+		private VentanaPersonaUpdate ventanaPersonaUpdate;
 		private Agenda agenda;
 		
 		public Controlador(Vista vista, Agenda agenda)
 		{
+			// Vista mapping
 			this.vista = vista;
 			this.vista.getBtnAgregar().addActionListener(a->ventanaAgregarPersona(a));
+			this.vista.getBtnEditar().addActionListener(a->ventanaEditarPersona(a));
 			this.vista.getBtnBorrar().addActionListener(s->borrarPersona(s));
 			this.vista.getBtnReporte().addActionListener(r->mostrarReporte(r));
-			this.ventanaPersona = VentanaPersona.getInstance();
-			this.ventanaPersona.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
+
+			// Ventana Persona mapping
+			this.ventanaPersonaInsert = (VentanaPersonaInsert) VentanaPersonaBase.getInstance(VentanaPersonaInsert.class);
+			this.ventanaPersonaUpdate = (VentanaPersonaUpdate) VentanaPersonaBase.getInstance(VentanaPersonaUpdate.class);
+			this.ventanaPersonaInsert.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
+			this.ventanaPersonaUpdate.getBtnEditarPersona().addActionListener(p->editarPersona(p));
 			this.agenda = agenda;
 		}
 		
 		private void ventanaAgregarPersona(ActionEvent a) {
-			this.ventanaPersona.mostrarVentana();
+			this.ventanaPersonaInsert.mostrarVentana();
+		}
+
+		private void ventanaEditarPersona(ActionEvent a) {
+			this.ventanaPersonaUpdate.mostrarVentana();
 		}
 
 		private void guardarPersona(ActionEvent p) {
-			String nombre = this.ventanaPersona.getTxtNombre().getText();
-			String tel = ventanaPersona.getTxtTelefono().getText();
+			String nombre = this.ventanaPersonaInsert.getTxtNombre().getText();
+			String tel = this.ventanaPersonaInsert.getTxtTelefono().getText();
 			PersonaDTO nuevaPersona = new PersonaDTO(0, nombre, tel);
 			this.agenda.agregarPersona(nuevaPersona);
 			this.refrescarTabla();
-			this.ventanaPersona.cerrar();
+			this.ventanaPersonaInsert.cerrar();
+		}
+
+		private void editarPersona(ActionEvent p) {
+			String nombre = this.ventanaPersonaUpdate.getTxtNombre().getText();
+			String tel = this.ventanaPersonaUpdate.getTxtTelefono().getText();
+			PersonaDTO persona = obtenerPersonaSeleccionada();
+			persona.setNombre(nombre);
+			persona.setTelefono(tel);
+			this.agenda.actualizarPersona(persona);
+			this.refrescarTabla();
+			this.ventanaPersonaUpdate.cerrar();
 		}
 
 		private void mostrarReporte(ActionEvent r) {
@@ -55,6 +79,11 @@ public class Controlador implements ActionListener
 			}
 			
 			this.refrescarTabla();
+		}
+
+		public PersonaDTO obtenerPersonaSeleccionada() {
+			int[] filasSeleccionadas = this.vista.getTablaPersonas().getSelectedRows();
+			return this.personasEnTabla.get(filasSeleccionadas[0]);
 		}
 		
 		public void inicializar()
