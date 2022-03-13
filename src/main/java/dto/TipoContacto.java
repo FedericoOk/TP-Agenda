@@ -17,5 +17,14 @@ public class TipoContacto {
     private int id;
 
     private String description;
+
+    public TipoContacto(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return description;
+    }
     
 }

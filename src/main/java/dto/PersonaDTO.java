@@ -31,13 +31,14 @@ public class PersonaDTO {
 	@OneToOne
 	private TipoContacto tipoContacto;
 
-	public PersonaDTO(int idPersona, String nombre, String telefono, String email, Date nacimiento)
+	public PersonaDTO(int idPersona, String nombre, String telefono, String email, Date nacimiento, TipoContacto tipoContacto)
 	{
 		this.idPersona = idPersona;
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.email = email;
 		this.nacimiento = nacimiento;
+		this.tipoContacto = tipoContacto;
 	}
 	
 	public int getIdPersona() 

@@ -1,8 +1,7 @@
 package presentacion.vista;
 
-import java.util.Random;
+import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,7 +15,7 @@ import com.toedter.calendar.JDateChooser;
 import dto.PersonaDTO;
 import dto.TipoContacto;
 
-public class VentanaPersonaBase extends JFrame 
+public abstract class VentanaPersonaBase extends JFrame 
 {
 	protected static final long serialVersionUID = 1L;
 	protected JPanel contentPane;
@@ -24,12 +23,12 @@ public class VentanaPersonaBase extends JFrame
 	protected JTextField txtTelefono;
 	protected JTextField txtEmail;
 	protected JDateChooser jDateChooser;
-	protected JComboBox jComboBoxTipoContacto;
+	protected JComboBox<TipoContacto> jComboBoxTipoContacto;
 	protected JButton btnAceptar;
 
-	protected VentanaPersonaBase() 
+	protected VentanaPersonaBase(String title) 
 	{
-		super();
+		super(title);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 343, 306);
@@ -92,12 +91,6 @@ public class VentanaPersonaBase extends JFrame
 		
 		this.setVisible(false);
 	}
-
-	enum TipoPersona { // Esto lo dejo acá de momento solo para tener algo de momento
-		TIPO_A,
-		TIPO_B,
-		TIPO_C
-	}
 	
 	public void mostrarVentana(PersonaDTO personaDTO)
 	{
@@ -105,19 +98,20 @@ public class VentanaPersonaBase extends JFrame
 		this.txtTelefono.setText(personaDTO.getTelefono());
 		this.txtEmail.setText(personaDTO.getEmail());
 		this.jDateChooser.setDate(personaDTO.getNacimiento());
-		this.jComboBoxTipoContacto.setModel(new DefaultComboBoxModel<TipoPersona>(TipoPersona.values())); // Solo para tener algo
-		this.jComboBoxTipoContacto.setSelectedIndex(new Random().nextInt(3));
-		// this.jComboBoxTipoContacto.setSelectedItem(personaDTO.getTipoContacto()); // TODO: ver si tengo que sobreescribir hashCode de PersonaDTO
+		this.jComboBoxTipoContacto.setSelectedItem(personaDTO.getTipoContacto());
 		this.setVisible(true);
 	}
 
-	// public void Populate
-
 	public void mostrarVentana()
 	{
-		this.jComboBoxTipoContacto.setModel(new DefaultComboBoxModel<TipoPersona>(TipoPersona.values())); // Solo para tener algo
 		this.jComboBoxTipoContacto.setSelectedIndex(-1);
 		this.setVisible(true);
+	}
+
+	public void llenarComboTipoContacto(List<TipoContacto> tiposContactoEnLista) {
+		this.jComboBoxTipoContacto.removeAllItems();
+		for (TipoContacto tipoContacto : tiposContactoEnLista)
+			this.jComboBoxTipoContacto.addItem(tipoContacto);
 	}
 	
 	public JTextField getTxtNombre() 
@@ -140,10 +134,17 @@ public class VentanaPersonaBase extends JFrame
 		return jDateChooser;
 	}
 
+	public JComboBox<TipoContacto> getComboTipoContacto() {
+		return this.jComboBoxTipoContacto;
+	}
+
 	public void cerrar()
 	{
 		this.txtNombre.setText(null);
 		this.txtTelefono.setText(null);
+		this.txtEmail.setText(null);
+		this.jDateChooser.setDate(null);
+		this.jComboBoxTipoContacto.setSelectedIndex(-1);
 		this.dispose();
 	}
 	

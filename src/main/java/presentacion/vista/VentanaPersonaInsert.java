@@ -16,7 +16,7 @@ public class VentanaPersonaInsert extends VentanaPersonaBase
 
 	private VentanaPersonaInsert()
 	{
-		super();
+		super("Agregar persona");
 		
 		btnAceptar.setText("Agregar");
 		

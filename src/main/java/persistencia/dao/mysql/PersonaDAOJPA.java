@@ -3,6 +3,6 @@ package persistencia.dao.mysql;
 import dto.PersonaDTO;
 import persistencia.dao.interfaz.PersonaDAO;
 
-public class PersonaDAOSQL extends DAOJPA<PersonaDTO> implements PersonaDAO {
+public class PersonaDAOJPA extends DAOJPA<PersonaDTO> implements PersonaDAO {
 
 }

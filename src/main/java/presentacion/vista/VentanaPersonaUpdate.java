@@ -16,7 +16,7 @@ public class VentanaPersonaUpdate extends VentanaPersonaBase
 
 	private VentanaPersonaUpdate() 
 	{
-		super();
+		super("Actualizar persona");
 		
 		btnAceptar.setText("Editar");
 		
