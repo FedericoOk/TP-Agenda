@@ -32,6 +32,7 @@ public class Vista
 	private JButton btnBorrar;
 	private JButton btnReporte;
 	private JMenuItem menuItemTipoContacto;
+	private JMenuItem menuItemUbicaciones;
 	private DefaultTableModel modelPersonas;
 	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Email","Nacimiento","TipoContacto"};
 
@@ -66,8 +67,11 @@ public class Vista
 		
 		menuItemTipoContacto = new JMenuItem("Tipo Contacto");
 		menu.add(menuItemTipoContacto);
+
+		menuItemUbicaciones = new JMenuItem("Ubicaciones");
+		menu.add(menuItemUbicaciones);
 		
-		modelPersonas = new DefaultTableModel(null,nombreColumnas);
+		modelPersonas = new DefaultTableModel(null, nombreColumnas);
 		tablaPersonas = new JTable(modelPersonas);
 		
 		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(103);
@@ -158,6 +162,10 @@ public class Vista
 
 	public JMenuItem getMenuItemTipoContacto() {
 		return menuItemTipoContacto;
+	}
+
+	public JMenuItem getMenuItemUbicaciones() {
+		return menuItemUbicaciones;
 	}
 
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
