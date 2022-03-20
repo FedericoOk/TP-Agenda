@@ -11,7 +11,7 @@ public class TipoContactoDAOJPA extends DAOJPA<TipoContacto> implements TipoCont
     @SuppressWarnings("unchecked")
     public List<TipoContacto> readAll() {
         entityManager.getTransaction().begin();
-        List<TipoContacto> result = entityManager.createQuery("from " + entityClass.getSimpleName() + " order by description").getResultList();
+        List<TipoContacto> result = entityManager.createQuery("from " + entityClass.getSimpleName() + " order by nombre").getResultList();
         entityManager.getTransaction().commit();
         return result;
     }

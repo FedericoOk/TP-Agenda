@@ -22,11 +22,16 @@ public class PaisDTO {
 
     private String nombre;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pais")
     private List<ProvinciaDTO> provincias;
 
     public PaisDTO(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre;
     }
     
 }

@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -25,8 +26,17 @@ public class ProvinciaDTO {
     @OneToMany(cascade = CascadeType.ALL)
     List<LocalidadDTO> localidades;
 
-    public ProvinciaDTO(String nombre) {
+    @ManyToOne
+    private PaisDTO pais;
+
+    public ProvinciaDTO(String nombre, PaisDTO pais) {
         this.nombre = nombre;
+        this.pais = pais;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre;
     }
     
 }
