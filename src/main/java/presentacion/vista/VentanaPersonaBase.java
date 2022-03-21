@@ -123,7 +123,7 @@ public abstract class VentanaPersonaBase extends JFrame
 		NumberFormatter formatter = new NumberFormatter(format);
 		formatter.setValueClass(Integer.class);
 		formatter.setMinimum(0);
-		formatter.setMinimum(Integer.MAX_VALUE);
+		formatter.setMaximum(Integer.MAX_VALUE);
 		formatter.setAllowsInvalid(false);
 
 		numAltura = new JFormattedTextField(format);
