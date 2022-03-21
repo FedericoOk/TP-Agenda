@@ -23,15 +23,11 @@ public class DAOJPA<T> implements DAO<T> {
     }
 
     @Override
-    public boolean insert(T t) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(t);
-            entityManager.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public T insert(T t) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(t);
+        entityManager.getTransaction().commit();
+        return t;
     }
 
     @Override
@@ -43,16 +39,11 @@ public class DAOJPA<T> implements DAO<T> {
     }
 
     @Override
-    public boolean delete(T t) {
-        try {
-            entityManager.getTransaction().begin();
-            t = entityManager.merge(t);
-            entityManager.remove(t);
-            entityManager.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void delete(T t) {
+        entityManager.getTransaction().begin();
+        t = entityManager.merge(t);
+        entityManager.remove(t);
+        entityManager.getTransaction().commit();
     }
 
     @Override
