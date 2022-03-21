@@ -232,6 +232,18 @@ public class VentanaUbicaciones extends JFrame {
 	public void mostrarVentana() {
 		setVisible(true);
 	}
+
+	public DefaultListModel<PaisDTO> getModeloPaises() {
+		return this.modelPaises;
+	}
+
+	public DefaultListModel<ProvinciaDTO> getModeloProvincias() {
+		return this.modelProvincias;
+	}
+
+	public DefaultListModel<LocalidadDTO> getModeloLocalidades() {
+		return this.modelLocalidades;
+	}
 	
 	public void llenarListaPais(List<PaisDTO> paisesEnLista) {
 		this.modelPaises.clear();
@@ -293,14 +305,17 @@ public class VentanaUbicaciones extends JFrame {
 	
 	public void limpiarFormularioPaís() {
 		this.textNombrePais.setText(null);
+		this.modelPaises.clear();
 	}
 	
 	public void limpiarFormularioProvincia() {
 		this.textNombreProvincia.setText(null);
+		this.modelProvincias.clear();
 	}
 	
 	public void limpiarFormularioLocalidad() {
 		this.textNombreLocalidad.setText(null);
+		this.modelLocalidades.clear();
 	}
 
 	public JTextField getTextNombrePais() {

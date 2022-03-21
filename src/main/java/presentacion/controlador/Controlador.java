@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
 
 import dto.DomicilioDTO;
 import dto.LocalidadDTO;
@@ -26,8 +27,6 @@ public class Controlador implements ActionListener {
 	private Vista vista;
 	private List<PersonaDTO> personasEnTabla;
 	private List<PaisDTO> paisesEnLista;
-	private List<ProvinciaDTO> provinciasEnLista;
-	private List<LocalidadDTO> localidadesEnLista;
 	private List<TipoContacto> tiposContactoEnLista;
 	private VentanaPersonaInsert ventanaPersonaInsert;
 	private VentanaPersonaUpdate ventanaPersonaUpdate;
@@ -51,21 +50,37 @@ public class Controlador implements ActionListener {
 		// Ventana Persona mapping
 		this.ventanaPersonaInsert = VentanaPersonaInsert.getInstance();
 		this.ventanaPersonaUpdate = VentanaPersonaUpdate.getInstance();
-		this.ventanaPersonaInsert.getBtnAgregarPersona().addActionListener(p -> guardarPersona(p));
-		this.ventanaPersonaUpdate.getBtnEditarPersona().addActionListener(p -> editarPersona(p));
+		this.ventanaPersonaInsert.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
+		this.ventanaPersonaUpdate.getBtnEditarPersona().addActionListener(p->editarPersona(p));
+		this.ventanaPersonaInsert.getJComboPais().addActionListener(l -> this.filtrarProvincias(l));
+		this.ventanaPersonaInsert.getJComboPais().addActionListener(l -> this.limpiarFormularioProvinciaVentanaPersonaInsert(l)); // TODO: usar una sola ventana
+		this.ventanaPersonaInsert.getJComboPais().addActionListener(l -> this.limpiarFormularioLocalidadVentanaPersonaInsert(l));
+		this.ventanaPersonaUpdate.getJComboPais().addActionListener(l -> this.filtrarProvincias(l));
+		this.ventanaPersonaUpdate.getJComboPais().addActionListener(l -> this.limpiarFormularioProvinciaVentanaPersonaUpdate(l));
+		this.ventanaPersonaUpdate.getJComboPais().addActionListener(l -> this.limpiarFormularioLocalidadVentanaPersonaUpdate(l));
+		this.ventanaPersonaInsert.getJComboProvincia().addActionListener(l -> this.filtrarLocalidades(l));
+		this.ventanaPersonaInsert.getJComboProvincia().addActionListener(l -> this.limpiarFormularioLocalidadVentanaPersonaInsert(l));
+		this.ventanaPersonaUpdate.getJComboProvincia().addActionListener(l -> this.filtrarLocalidades(l));
+		this.ventanaPersonaUpdate.getJComboProvincia().addActionListener(l -> this.limpiarFormularioLocalidadVentanaPersonaUpdate(l));
 		this.agenda = agenda;
 
 		// Ventana Ubicaciones mapping
 		this.ventanaUbicaciones = VentanaUbicaciones.getInstance();
-		this.ventanaUbicaciones.getBtnAgregarPais().addActionListener(p -> guardarPais(p));
-		this.ventanaUbicaciones.getBtnEditarPais().addActionListener(p -> editarPais(p));
-		this.ventanaUbicaciones.getBtnEliminarPais().addActionListener(p -> borrarPais(p));
-		this.ventanaUbicaciones.getBtnAgregarProvincia().addActionListener(p -> guardarProvincia(p));
-		this.ventanaUbicaciones.getBtnEditarProvincia().addActionListener(p -> editarProvincia(p));
-		this.ventanaUbicaciones.getBtnEliminarProvincia().addActionListener(p -> borrarProvincia(p));
-		this.ventanaUbicaciones.getBtnAgregarLocalidad().addActionListener(l -> guardarLocalidad(l));
-		this.ventanaUbicaciones.getBtnEditarLocalidad().addActionListener(l -> editarLocalidad(l));
-		this.ventanaUbicaciones.getBtnEliminarLocalidad().addActionListener(l -> borrarLocalidad(l));
+		this.ventanaUbicaciones.getBtnAgregarPais().addActionListener(p->guardarPais(p));
+		this.ventanaUbicaciones.getBtnEditarPais().addActionListener(p->editarPais(p));
+		this.ventanaUbicaciones.getBtnEliminarPais().addActionListener(p->borrarPais(p));
+		this.ventanaUbicaciones.getBtnAgregarProvincia().addActionListener(p->guardarProvincia(p));
+		this.ventanaUbicaciones.getBtnEditarProvincia().addActionListener(p->editarProvincia(p));
+		this.ventanaUbicaciones.getBtnEliminarProvincia().addActionListener(p->borrarProvincia(p));
+		this.ventanaUbicaciones.getBtnAgregarLocalidad().addActionListener(l->guardarLocalidad(l));
+		this.ventanaUbicaciones.getBtnEditarLocalidad().addActionListener(l->editarLocalidad(l));
+		this.ventanaUbicaciones.getBtnEliminarLocalidad().addActionListener(l->borrarLocalidad(l));
+		this.ventanaUbicaciones.getListaPaises().addListSelectionListener(l -> this.actualizarFormularioPais(l));
+		this.ventanaUbicaciones.getListaPaises().addListSelectionListener(l -> this.filtrarProvincias(l));
+		this.ventanaUbicaciones.getListaPaises().addListSelectionListener(l -> this.limpiarFormularioLocalidad(l));
+		this.ventanaUbicaciones.getListaProvincias().addListSelectionListener(l -> this.actualizarFormularioProvincia(l));
+		this.ventanaUbicaciones.getListaProvincias().addListSelectionListener(l -> this.filtrarLocalidades(l));
+		this.ventanaUbicaciones.getListaLocalidades().addListSelectionListener(l -> this.actualizarFormularioLocalidad(l));
 
 		// Ventana Tipo Contacto
 		this.ventanaTipoContacto = VentanaTipoContacto.getInstance();
@@ -76,19 +91,19 @@ public class Controlador implements ActionListener {
 
 	private void ventanaAgregarPersona(ActionEvent a) {
 		this.refrescarListaTipoContactoEnVentanaPersonaInsert();
-		this.refrescarListaLocalidadesEnVentanaPersonaInsert();
+		this.ventanaPersonaInsert.llenarComboPaises(this.paisesEnLista);
 		this.ventanaPersonaInsert.mostrarVentana();
 	}
 
 	private void ventanaEditarPersona(ActionEvent a) {
 		PersonaDTO personaAEditar = obtenerPersonaSeleccionada();
 		this.refrescarListaTipoContactoEnVentanaPersonaUpdate();
-		this.refrescarListaLocalidadesEnVentanaPersonaUpdate();
+		this.ventanaPersonaUpdate.llenarComboPaises(this.paisesEnLista);
 		this.ventanaPersonaUpdate.mostrarVentana(personaAEditar);
 	}
 
 	private void ventanaUbicaciones(ActionEvent e) {
-		this.refrescarListaPaises();
+		this.ventanaUbicaciones.llenarListaPais(this.paisesEnLista);
 		this.ventanaUbicaciones.mostrarVentana();
 	}
 
@@ -98,6 +113,7 @@ public class Controlador implements ActionListener {
 	}
 
 	private void guardarPersona(ActionEvent p) {
+		// creamos la persona
 		String nombre = this.ventanaPersonaInsert.getTxtNombre().getText();
 		String tel = this.ventanaPersonaInsert.getTxtTelefono().getText();
 		String email = this.ventanaPersonaInsert.getTxtEmail().getText();
@@ -111,21 +127,26 @@ public class Controlador implements ActionListener {
 		LocalidadDTO localidad = (LocalidadDTO) this.ventanaPersonaInsert.getJComboLocalidad().getSelectedItem();
 		DomicilioDTO domicilio = new DomicilioDTO(calle, altura, piso, depto, localidad);
 		String mesNacimiento = (String) this.ventanaPersonaInsert.getComboMesNacimiento().getSelectedItem();
-		PersonaDTO nuevaPersona = new PersonaDTO(nombre, tel, email, nacimiento, tipoContacto, domicilio,
-				plataformaAlmacenamiento, mesNacimiento);
+
+		PersonaDTO nuevaPersona = new PersonaDTO(nombre, tel, email, nacimiento, tipoContacto, domicilio, plataformaAlmacenamiento, mesNacimiento);
 		if (nombre.isEmpty() || tel.equals("(___) ____-____") || email.isEmpty()) {
 			JOptionPane.showMessageDialog(this.ventanaPersonaInsert,
 					"El contacto debe tener al menos Nombre , Telefono y Email.");
 		} else if (!ptremail.matcher(email).matches()) {
 			JOptionPane.showMessageDialog(this.ventanaPersonaInsert, "Formato invalido de Email.");
 		} else {
-			this.agenda.agregarPersona(nuevaPersona);
+			// guardamos la persona en la agenda
+			nuevaPersona = this.agenda.agregarPersona(nuevaPersona);
+
+			// actualizamos la lista en memoria
+			// actualizamos la lista en la ventana
 			this.refrescarTabla();
 			this.ventanaPersonaInsert.cerrar();
 		}
 	}
 
 	private void editarPersona(ActionEvent p) {
+		// actializamos la persona
 		String nombre = this.ventanaPersonaUpdate.getTxtNombre().getText();
 		String tel = this.ventanaPersonaUpdate.getTxtTelefono().getText();
 		String email = this.ventanaPersonaUpdate.getTxtEmail().getText();
@@ -151,13 +172,18 @@ public class Controlador implements ActionListener {
 		persona.getDomicilio().setPiso(piso);
 		persona.getDomicilio().setDepto(depto);
 		persona.getDomicilio().setLocalidad(localidad);
+		
 		if (nombre.isEmpty() || tel.equals("(___) ____-____") || email.isEmpty()) {
 			JOptionPane.showMessageDialog(this.ventanaPersonaInsert,
 					"El contacto debe tener al menos Nombre , Telefono y Email.");
 		} else if (!ptremail.matcher(email).matches()) {
 			JOptionPane.showMessageDialog(this.ventanaPersonaInsert, "Formato invalido de Email.");
 		} else {
+			// actualizamos la persona en la agenda
 			this.agenda.actualizarPersona(persona);
+
+			// actualizamos la lista en memoria
+			// actualizamos la lista en la ventana
 			this.refrescarTabla();
 			this.ventanaPersonaUpdate.cerrar();
 		}
@@ -174,8 +200,8 @@ public class Controlador implements ActionListener {
 		for (int fila : filasSeleccionadas) {
 			this.agenda.borrarPersona(this.personasEnTabla.get(fila));
 		}
-
-		this.refrescarTabla();
+		
+		this.refrescarTabla(); // TODO: aliminar de la lista sin volver a consultar a la base de datos?
 	}
 
 	public PersonaDTO obtenerPersonaSeleccionada() {
@@ -184,72 +210,158 @@ public class Controlador implements ActionListener {
 	}
 
 	private void guardarPais(ActionEvent p) {
+		// creamos el nuevo país
 		String nombrePais = this.ventanaUbicaciones.getTextNombrePais().getText();
 		PaisDTO pais = new PaisDTO(nombrePais);
-		this.agenda.agregarPais(pais);
-		this.refrescarListaPaises();
+
+		// guardamos el país en la agenda
+		pais = this.agenda.agregarPais(pais);
+
+		// actualizamos la lista en memoria
+		this.paisesEnLista = agenda.obtenerPaises(); // así ya viene ordenado por nombre
+
+		// actualizamos la lista en la ventana
+		int idx = this.paisesEnLista.indexOf(pais);
+		this.ventanaUbicaciones.getModeloPaises().add(idx, pais);
+
+		// TODO: ver si limpio la selección de las listas de provincias y localidades acá o en la ventana
+		// O si el Listener de la lista me toma la actualización y resetea las otras seleccionadas
 	}
 
 	private void editarPais(ActionEvent p) {
+		// actualizamos el país
 		String nuevoNombre = this.ventanaUbicaciones.getTextNombrePais().getText();
 		PaisDTO pais = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
 		pais.setNombre(nuevoNombre);
-		this.agenda.actualizarPais(pais);
-		this.refrescarListaPaises();
+
+		// actualizamos el país en la agenda
+		pais = this.agenda.actualizarPais(pais);
+
+		// actualizamos la lista en memoria
+		this.paisesEnLista = agenda.obtenerPaises(); // TODO: ver si esto es necesario porque si se actualiza arriba y todos usan el mismo no debería ser necesario
+
+		// actualizamos la lista en la ventana
+		int idx = this.paisesEnLista.indexOf(pais);
+		this.ventanaUbicaciones.getModeloPaises().set(idx, pais);
 	}
 
 	private void borrarPais(ActionEvent p) {
+		// obtenemos el país seleccionado
 		PaisDTO pais = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
+
+		// eliminamos el país de la agenda
 		this.agenda.borrarPais(pais);
-		this.refrescarListaPaises();
+
+		// actualizamos la lista en memoria
+		this.paisesEnLista = agenda.obtenerPaises();
+
+		// actualizamos la lista en la ventana
+		this.ventanaUbicaciones.getModeloPaises().removeElement(pais);
 	}
 
 	private void guardarProvincia(ActionEvent p) {
+		// creamos la nueva provincia
 		String nombreProvincia = this.ventanaUbicaciones.getTextNombreProvincia().getText();
 		PaisDTO pais = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
 		ProvinciaDTO provincia = new ProvinciaDTO(nombreProvincia, pais);
-		this.agenda.agregarProvincia(provincia);
-		this.refrescarListaProvincias();
+
+		// guardamos la provincia en la agenda
+		provincia = this.agenda.agregarProvincia(provincia);
+
+		// actualizamos la lista en memoria
+
+		// actualizamos la lista en la ventana
+		int idx = pais.getProvincias().indexOf(provincia);
+		this.ventanaUbicaciones.getModeloProvincias().add(idx, provincia);
 	}
 
 	private void editarProvincia(ActionEvent p) {
+		// actualizamos la provincia
 		String nuevoNombre = this.ventanaUbicaciones.getTextNombreProvincia().getText();
-		PaisDTO pais = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
 		ProvinciaDTO provincia = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
+		PaisDTO pais = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
+		int oldIdx = pais.getProvincias().indexOf(provincia);
 		provincia.setNombre(nuevoNombre);
-		provincia.setPais(pais);
-		this.agenda.actualizarProvincia(provincia);
-		this.refrescarListaProvincias();
+
+		// actualizamos la provincia en la agenda
+		provincia = this.agenda.actualizarProvincia(provincia);
+
+		// actualizamos la lista en memoria
+		pais.ordenarProvinciasPorNombre();
+		
+		// actualizamos la lista en la ventana
+		int idx = pais.getProvincias().indexOf(provincia); // hay un bug acá.
+		// this.ventanaUbicaciones.getModeloProvincias().remove(oldIdx);
+		// this.ventanaUbicaciones.getModeloProvincias().set(idx, provincia);
+		// this.ventanaUbicaciones.getModeloProvincias().setElementAt(provincia, idx);
+		this.ventanaUbicaciones.getModeloProvincias().remove(oldIdx);
+		this.ventanaUbicaciones.getModeloProvincias().add(idx, provincia);
 	}
 
 	private void borrarProvincia(ActionEvent p) {
+		// obtenemos la provincia seleccionada
 		ProvinciaDTO provincia = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
+
+		// eliminamos la provincia de la agenda
 		this.agenda.borrarProvincia(provincia);
-		this.refrescarListaProvincias();
+
+		// actualizamos la lista en memoria
+		provincia.getPais().removeProvincia(provincia);
+
+		// actualizamos la lista en la ventana
+		this.ventanaUbicaciones.getModeloProvincias().removeElement(provincia);
+		// this.refrescarListaProvincias();
 	}
 
 	private void guardarLocalidad(ActionEvent p) {
+		// creamos la nueva localidad
 		String nombreLocalidad = this.ventanaUbicaciones.getTextNombreLocalidad().getText();
 		ProvinciaDTO provincia = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
 		LocalidadDTO localidad = new LocalidadDTO(nombreLocalidad, provincia);
-		this.agenda.agregarLocalidad(localidad);
-		this.refrescarListaLocalidades();
+
+		// guardamos la localidad en la agenda
+		localidad = this.agenda.agregarLocalidad(localidad);
+
+		// actualizamos la lista en memoria
+
+		// actualizamos la lista en la ventana
+		int idx = provincia.getLocalidades().indexOf(localidad);
+		this.ventanaUbicaciones.getModeloLocalidades().add(idx, localidad);
+		// this.refrescarListaLocalidades();
 	}
 
 	private void editarLocalidad(ActionEvent p) {
+		// actualizamos la localidad
 		String nuevoNombre = this.ventanaUbicaciones.getTextNombreLocalidad().getText();
-		ProvinciaDTO provincia = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
 		LocalidadDTO localidad = this.ventanaUbicaciones.getListaLocalidades().getSelectedValue();
+		ProvinciaDTO provincia = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
+		int oldIdx = provincia.getLocalidades().indexOf(localidad);
 		localidad.setNombre(nuevoNombre);
-		localidad.setProvincia(provincia);
-		this.agenda.actualizarLocalidad(localidad);
-		this.refrescarListaLocalidades();
+
+		// actualizamos la localidad en la agenda
+		localidad = this.agenda.actualizarLocalidad(localidad);
+
+		// actualizamos la lista en memoria
+		provincia.ordenarLocalidadesPorNombre();
+
+		// actualizamos la lista en la ventana
+		int idx = provincia.getLocalidades().indexOf(localidad);
+		this.ventanaUbicaciones.getModeloLocalidades().remove(oldIdx);
+		this.ventanaUbicaciones.getModeloLocalidades().add(idx, localidad);
 	}
 
 	private void borrarLocalidad(ActionEvent p) {
+		// obtenemos la localidad seleccionada
 		LocalidadDTO localidad = this.ventanaUbicaciones.getListaLocalidades().getSelectedValue();
+
+		// eliminamos la provincia de la agenda
 		this.agenda.borrarLocalidad(localidad);
-		this.refrescarListaLocalidades();
+
+		// actualizamos la lista en memoria
+		localidad.getProvincia().removeLocalidad(localidad);
+
+		// actualizamos la lista en la ventana
+		this.ventanaUbicaciones.getModeloLocalidades().removeElement(localidad);
 	}
 
 	private void guardarTipoContacto(ActionEvent t) {
@@ -293,34 +405,80 @@ public class Controlador implements ActionListener {
 		this.ventanaPersonaInsert.llenarComboTipoContacto(this.tiposContactoEnLista);
 	}
 
-	private void refrescarListaLocalidadesEnVentanaPersonaInsert() {
-		this.localidadesEnLista = agenda.obtenerLocalidades();
-		this.ventanaPersonaInsert.llenarComboLocalidades(this.localidadesEnLista);
-	}
-
 	private void refrescarListaTipoContactoEnVentanaPersonaUpdate() {
 		this.tiposContactoEnLista = agenda.obtenerTiposContacto();
 		this.ventanaPersonaUpdate.llenarComboTipoContacto(this.tiposContactoEnLista);
 	}
-
-	private void refrescarListaLocalidadesEnVentanaPersonaUpdate() {
-		this.localidadesEnLista = agenda.obtenerLocalidades();
-		this.ventanaPersonaUpdate.llenarComboLocalidades(localidadesEnLista);
-	}
-
-	private void refrescarListaPaises() {
+	
+	private void refrescarUbicaciones() {
 		this.paisesEnLista = agenda.obtenerPaises();
-		this.ventanaUbicaciones.llenarListaPais(paisesEnLista);
 	}
 
-	private void refrescarListaProvincias() {
-		this.provinciasEnLista = agenda.obtenerProvincias();
-		this.ventanaUbicaciones.llenarListaProvincias(provinciasEnLista);
+	private void actualizarFormularioPais(ListSelectionEvent l) {
+		PaisDTO pais = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
+		String data = pais == null ? "" : pais.getNombre();
+		this.ventanaUbicaciones.getTextNombrePais().setText(data);
+
+		// TODO: ver dónde hacer esto
+		// this.ventanaUbicaciones.getListaProvincias().clearSelection();
+		// this.ventanaUbicaciones.getListaLocalidades().clearSelection();
 	}
 
-	private void refrescarListaLocalidades() {
-		this.localidadesEnLista = agenda.obtenerLocalidades();
-		this.ventanaUbicaciones.llenarListaLocalidades(localidadesEnLista);
+	private void actualizarFormularioProvincia(ListSelectionEvent l) {
+		ProvinciaDTO provincia = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
+		String data = provincia == null ? "" : provincia.getNombre();
+		this.ventanaUbicaciones.getTextNombreProvincia().setText(data);
+	}
+
+	private void actualizarFormularioLocalidad(ListSelectionEvent l) {
+		LocalidadDTO localidad = this.ventanaUbicaciones.getListaLocalidades().getSelectedValue();
+		String data = localidad == null ? "" : localidad.getNombre();
+		this.ventanaUbicaciones.getTextNombreLocalidad().setText(data);
+	}
+
+	private void filtrarProvincias(ListSelectionEvent l) {
+		PaisDTO paisSeleccionado = this.ventanaUbicaciones.getListaPaises().getSelectedValue();
+		if (paisSeleccionado != null)
+			this.ventanaUbicaciones.llenarListaProvincias(paisSeleccionado.getProvincias());
+	}
+
+	private void filtrarLocalidades(ListSelectionEvent l) {
+		ProvinciaDTO provinciaSeleccionada = this.ventanaUbicaciones.getListaProvincias().getSelectedValue();
+		if (provinciaSeleccionada != null)
+			this.ventanaUbicaciones.llenarListaLocalidades(provinciaSeleccionada.getLocalidades());
+	}
+
+	private void limpiarFormularioLocalidad(ListSelectionEvent l) {
+		this.ventanaUbicaciones.getModeloLocalidades().clear();
+		this.ventanaUbicaciones.getTextNombreLocalidad().setText("");
+	}
+
+	private void filtrarProvincias(ActionEvent l) {
+		PaisDTO paisSeleccionado = (PaisDTO) this.ventanaPersonaInsert.getJComboPais().getSelectedItem();
+		if (paisSeleccionado != null)
+			this.ventanaPersonaInsert.llenarComboProvincias(paisSeleccionado.getProvincias());
+	}
+
+	private void filtrarLocalidades(ActionEvent l) {
+		ProvinciaDTO provinciaSeleccionada = (ProvinciaDTO) this.ventanaPersonaInsert.getJComboProvincia().getSelectedItem();
+		if (provinciaSeleccionada != null)
+			this.ventanaPersonaInsert.llenarComboLocalidades(provinciaSeleccionada.getLocalidades());
+	}
+
+	private void limpiarFormularioProvinciaVentanaPersonaInsert(ActionEvent l) {
+		this.ventanaPersonaInsert.getJComboProvincia().setSelectedIndex(-1);
+	}
+
+	private void limpiarFormularioLocalidadVentanaPersonaInsert(ActionEvent l) {
+		this.ventanaPersonaInsert.getJComboLocalidad().setSelectedIndex(-1);
+	}
+
+	private void limpiarFormularioProvinciaVentanaPersonaUpdate(ActionEvent l) {
+		this.ventanaPersonaUpdate.getJComboProvincia().setSelectedIndex(-1);
+	}
+
+	private void limpiarFormularioLocalidadVentanaPersonaUpdate(ActionEvent l) {
+		this.ventanaPersonaUpdate.getJComboLocalidad().setSelectedIndex(-1);
 	}
 
 	private void refrescarListaComboMesNacimiento() {
@@ -330,11 +488,9 @@ public class Controlador implements ActionListener {
 
 	public void inicializar() {
 		this.refrescarTabla();
-		this.refrescarListaPaises();
-		this.refrescarListaProvincias();
-		this.refrescarListaLocalidades();
 		this.refrescarListaTipoContacto();
 		this.refrescarListaComboMesNacimiento();
+		this.refrescarUbicaciones();
 		this.vista.show();
 	}
 
