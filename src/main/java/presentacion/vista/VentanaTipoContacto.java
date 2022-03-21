@@ -27,7 +27,7 @@ import dto.TipoContacto;
 
 public class VentanaTipoContacto extends JFrame {
 
-    private JTextField txtDescription;
+    private JTextField txtNombre;
     private JButton btnAgregar;
     private JButton btnEditar;
     private JButton btnEliminar;
@@ -69,8 +69,8 @@ public class VentanaTipoContacto extends JFrame {
 
                 if (value instanceof TipoContacto) {
                     TipoContacto elemento = (TipoContacto) value;
-                    setText(elemento.getDescription());
-                    setToolTipText(elemento.getDescription());
+                    setText(elemento.getNombre());
+                    setToolTipText(elemento.getNombre());
                 }
 
                 return this;
@@ -103,9 +103,9 @@ public class VentanaTipoContacto extends JFrame {
 		JLabel lblNombre = new JLabel("Nombre");
 		panelData.add(lblNombre);
 		
-		txtDescription = new JTextField();
-		panelData.add(txtDescription);
-		txtDescription.setColumns(10);
+		txtNombre = new JTextField();
+		panelData.add(txtNombre);
+		txtNombre.setColumns(10);
 		
 		JPanel panelOperaciones = new JPanel();
 		GridBagConstraints gbc_panelOperaciones = new GridBagConstraints();
@@ -145,8 +145,8 @@ public class VentanaTipoContacto extends JFrame {
             this.modeloListaContacto.addElement(t);
     }
 
-    public JTextField getTxtDescription() {
-        return this.txtDescription;
+    public JTextField getTxtNombre() {
+        return this.txtNombre;
     }
 
     public JList<TipoContacto> getListaTipoContacto() {
@@ -170,7 +170,7 @@ public class VentanaTipoContacto extends JFrame {
     }
 
     public void cerrar() {
-        this.txtDescription.setText(null);
+        this.txtNombre.setText(null);
         this.dispose();
     }
     

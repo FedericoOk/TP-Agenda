@@ -30,7 +30,7 @@ public abstract class VentanaPersonaBase extends JFrame
 	protected JComboBox<TipoContacto> jComboBoxTipoContacto;
 	protected JTextField txtCalle;
 	protected JFormattedTextField numAltura;
-	protected JFormattedTextField numPiso;
+	protected JTextField txtPiso;
 	protected JTextField txtDepto;
 	protected JComboBox<LocalidadDTO> jComboBoxLocalidad;
 	protected JButton btnAceptar;
@@ -131,10 +131,10 @@ public abstract class VentanaPersonaBase extends JFrame
 		panel.add(numAltura);
 		numAltura.setColumns(10);
 
-		numPiso = new JFormattedTextField(format);
-		numPiso.setBounds(133, 295, 164, 20);
-		panel.add(numPiso);
-		numPiso.setColumns(10);
+		txtPiso = new JTextField();
+		txtPiso.setBounds(133, 295, 164, 20);
+		panel.add(txtPiso);
+		txtPiso.setColumns(10);
 
 		txtDepto = new JTextField();
 		txtDepto.setBounds(133, 336, 164, 20);
@@ -161,7 +161,7 @@ public abstract class VentanaPersonaBase extends JFrame
 		this.jComboBoxTipoContacto.setSelectedItem(personaDTO.getTipoContacto());
 		this.txtCalle.setText(personaDTO.getDomicilio().getCalle());
 		this.numAltura.setText(Integer.toString(personaDTO.getDomicilio().getAltura()));
-		this.numPiso.setText(Integer.toString(personaDTO.getDomicilio().getPiso()));
+		this.txtPiso.setText(personaDTO.getDomicilio().getPiso());
 		this.txtDepto.setText(personaDTO.getDomicilio().getDepto());
 		this.jComboBoxLocalidad.setSelectedItem(personaDTO.getDomicilio().getLocalidad());
 		this.setVisible(true);
@@ -218,8 +218,8 @@ public abstract class VentanaPersonaBase extends JFrame
 		return numAltura;
 	}
 
-	public JFormattedTextField getTxtPiso() {
-		return numPiso;
+	public JTextField getTxtPiso() {
+		return txtPiso;
 	}
 
 	public JTextField getTxtDepto() {

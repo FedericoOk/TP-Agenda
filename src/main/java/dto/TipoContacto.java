@@ -16,15 +16,15 @@ public class TipoContacto {
     @GeneratedValue
     private int id;
 
-    private String description;
+    private String nombre;
 
-    public TipoContacto(String description) {
-        this.description = description;
+    public TipoContacto(String nombre) {
+        this.nombre = nombre;
     }
 
     @Override
     public String toString() {
-        return description;
+        return nombre;
     }
     
 }
