@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -21,8 +22,7 @@ import presentacion.vista.VentanaTipoContacto;
 import presentacion.vista.VentanaUbicaciones;
 import presentacion.vista.Vista;
 
-public class Controlador implements ActionListener
-{
+public class Controlador implements ActionListener {
 	private Vista vista;
 	private List<PersonaDTO> personasEnTabla;
 	private List<PaisDTO> paisesEnLista;
@@ -34,36 +34,37 @@ public class Controlador implements ActionListener
 	private VentanaUbicaciones ventanaUbicaciones;
 	private VentanaTipoContacto ventanaTipoContacto;
 	private Agenda agenda;
-	
-	public Controlador(Vista vista, Agenda agenda)
-	{
+	Pattern ptremail = Pattern.compile(
+			"(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*:(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)(?:,\\s*(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*))*)?;\\s*)");
+
+	public Controlador(Vista vista, Agenda agenda) {
 		// Vista mapping
 		this.vista = vista;
-		this.vista.getBtnAgregar().addActionListener(a->ventanaAgregarPersona(a));
-		this.vista.getBtnEditar().addActionListener(a->ventanaEditarPersona(a));
-		this.vista.getBtnBorrar().addActionListener(s->borrarPersona(s));
-		this.vista.getBtnReporte().addActionListener(r->mostrarReporte(r));
-		this.vista.getMenuItemUbicaciones().addActionListener(e->ventanaUbicaciones(e));
-		this.vista.getMenuItemTipoContacto().addActionListener(m->ventanaTipoContacto(m));
+		this.vista.getBtnAgregar().addActionListener(a -> ventanaAgregarPersona(a));
+		this.vista.getBtnEditar().addActionListener(a -> ventanaEditarPersona(a));
+		this.vista.getBtnBorrar().addActionListener(s -> borrarPersona(s));
+		this.vista.getBtnReporte().addActionListener(r -> mostrarReporte(r));
+		this.vista.getMenuItemUbicaciones().addActionListener(e -> ventanaUbicaciones(e));
+		this.vista.getMenuItemTipoContacto().addActionListener(m -> ventanaTipoContacto(m));
 
 		// Ventana Persona mapping
 		this.ventanaPersonaInsert = VentanaPersonaInsert.getInstance();
 		this.ventanaPersonaUpdate = VentanaPersonaUpdate.getInstance();
-		this.ventanaPersonaInsert.getBtnAgregarPersona().addActionListener(p->guardarPersona(p));
-		this.ventanaPersonaUpdate.getBtnEditarPersona().addActionListener(p->editarPersona(p));
+		this.ventanaPersonaInsert.getBtnAgregarPersona().addActionListener(p -> guardarPersona(p));
+		this.ventanaPersonaUpdate.getBtnEditarPersona().addActionListener(p -> editarPersona(p));
 		this.agenda = agenda;
 
 		// Ventana Ubicaciones mapping
 		this.ventanaUbicaciones = VentanaUbicaciones.getInstance();
-		this.ventanaUbicaciones.getBtnAgregarPais().addActionListener(p->guardarPais(p));
-		this.ventanaUbicaciones.getBtnEditarPais().addActionListener(p->editarPais(p));
-		this.ventanaUbicaciones.getBtnEliminarPais().addActionListener(p->borrarPais(p));
-		this.ventanaUbicaciones.getBtnAgregarProvincia().addActionListener(p->guardarProvincia(p));
-		this.ventanaUbicaciones.getBtnEditarProvincia().addActionListener(p->editarProvincia(p));
-		this.ventanaUbicaciones.getBtnEliminarProvincia().addActionListener(p->borrarProvincia(p));
-		this.ventanaUbicaciones.getBtnAgregarLocalidad().addActionListener(l->guardarLocalidad(l));
-		this.ventanaUbicaciones.getBtnEditarLocalidad().addActionListener(l->editarLocalidad(l));
-		this.ventanaUbicaciones.getBtnEliminarLocalidad().addActionListener(l->borrarLocalidad(l));
+		this.ventanaUbicaciones.getBtnAgregarPais().addActionListener(p -> guardarPais(p));
+		this.ventanaUbicaciones.getBtnEditarPais().addActionListener(p -> editarPais(p));
+		this.ventanaUbicaciones.getBtnEliminarPais().addActionListener(p -> borrarPais(p));
+		this.ventanaUbicaciones.getBtnAgregarProvincia().addActionListener(p -> guardarProvincia(p));
+		this.ventanaUbicaciones.getBtnEditarProvincia().addActionListener(p -> editarProvincia(p));
+		this.ventanaUbicaciones.getBtnEliminarProvincia().addActionListener(p -> borrarProvincia(p));
+		this.ventanaUbicaciones.getBtnAgregarLocalidad().addActionListener(l -> guardarLocalidad(l));
+		this.ventanaUbicaciones.getBtnEditarLocalidad().addActionListener(l -> editarLocalidad(l));
+		this.ventanaUbicaciones.getBtnEliminarLocalidad().addActionListener(l -> borrarLocalidad(l));
 
 		// Ventana Tipo Contacto
 		this.ventanaTipoContacto = VentanaTipoContacto.getInstance();
@@ -71,13 +72,13 @@ public class Controlador implements ActionListener
 		this.ventanaTipoContacto.getBtnEditar().addActionListener(t -> editarTipoContacto(t));
 		this.ventanaTipoContacto.getBtnEliminar().addActionListener(t -> eliminarTipoContacto(t));
 	}
-	
+
 	private void ventanaAgregarPersona(ActionEvent a) {
 		this.refrescarListaTipoContactoEnVentanaPersonaInsert();
 		this.refrescarListaLocalidadesEnVentanaPersonaInsert();
 		this.ventanaPersonaInsert.mostrarVentana();
 	}
-	
+
 	private void ventanaEditarPersona(ActionEvent a) {
 		PersonaDTO personaAEditar = obtenerPersonaSeleccionada();
 		this.refrescarListaTipoContactoEnVentanaPersonaUpdate();
@@ -94,7 +95,7 @@ public class Controlador implements ActionListener
 		this.refrescarListaTipoContacto();
 		this.ventanaTipoContacto.mostrarVentana();
 	}
-	
+
 	private void guardarPersona(ActionEvent p) {
 		String nombre = this.ventanaPersonaInsert.getTxtNombre().getText();
 		String tel = this.ventanaPersonaInsert.getTxtTelefono().getText();
@@ -102,15 +103,22 @@ public class Controlador implements ActionListener
 		Date nacimiento = this.ventanaPersonaInsert.getDateChooser().getDate();
 		TipoContacto tipoContacto = (TipoContacto) this.ventanaPersonaInsert.getComboTipoContacto().getSelectedItem();
 		String calle = this.ventanaPersonaInsert.getTxtCalle().getText();
-		int altura = Integer.parseInt(this.ventanaPersonaInsert.getTxtAltura().getText());
+		String altura = this.ventanaPersonaInsert.getTxtAltura().getText();
 		String piso = this.ventanaPersonaInsert.getTxtPiso().getText();
 		String depto = this.ventanaPersonaInsert.getTxtDepto().getText();
 		LocalidadDTO localidad = (LocalidadDTO) this.ventanaPersonaInsert.getJComboLocalidad().getSelectedItem();
 		DomicilioDTO domicilio = new DomicilioDTO(calle, altura, piso, depto, localidad);
 		PersonaDTO nuevaPersona = new PersonaDTO(nombre, tel, email, nacimiento, tipoContacto, domicilio);
-		this.agenda.agregarPersona(nuevaPersona);
-		this.refrescarTabla();
-		this.ventanaPersonaInsert.cerrar();
+		if (nombre.isEmpty() || tel.equals("(___) ____-____") || email.isEmpty()) {
+			JOptionPane.showMessageDialog(this.ventanaPersonaInsert,
+					"El contacto debe tener al menos Nombre , Telefono y Email.");
+		} else if (!ptremail.matcher(email).matches()) {
+			JOptionPane.showMessageDialog(this.ventanaPersonaInsert, "Formato invalido de Email.");
+		} else {
+			this.agenda.agregarPersona(nuevaPersona);
+			this.refrescarTabla();
+			this.ventanaPersonaInsert.cerrar();
+		}
 	}
 
 	private void editarPersona(ActionEvent p) {
@@ -119,7 +127,7 @@ public class Controlador implements ActionListener
 		String email = this.ventanaPersonaUpdate.getTxtEmail().getText();
 		Date nacimiento = this.ventanaPersonaUpdate.getDateChooser().getDate();
 		String calle = this.ventanaPersonaUpdate.getTxtCalle().getText();
-		int altura = Integer.parseInt(this.ventanaPersonaUpdate.getTxtAltura().getText());
+		String altura = this.ventanaPersonaUpdate.getTxtAltura().getText();
 		String piso = this.ventanaPersonaUpdate.getTxtPiso().getText();
 		String depto = this.ventanaPersonaUpdate.getTxtDepto().getText();
 		TipoContacto tipoContacto = (TipoContacto) this.ventanaPersonaUpdate.getComboTipoContacto().getSelectedItem();
@@ -135,24 +143,29 @@ public class Controlador implements ActionListener
 		persona.getDomicilio().setPiso(piso);
 		persona.getDomicilio().setDepto(depto);
 		persona.getDomicilio().setLocalidad(localidad);
-		this.agenda.actualizarPersona(persona);
-		this.refrescarTabla();
-		this.ventanaPersonaUpdate.cerrar();
+		if (nombre.isEmpty() || tel.equals("(___) ____-____") || email.isEmpty()) {
+			JOptionPane.showMessageDialog(this.ventanaPersonaInsert,
+					"El contacto debe tener al menos Nombre , Telefono y Email.");
+		} else if (!ptremail.matcher(email).matches()) {
+			JOptionPane.showMessageDialog(this.ventanaPersonaInsert, "Formato invalido de Email.");
+		} else {
+			this.agenda.actualizarPersona(persona);
+			this.refrescarTabla();
+			this.ventanaPersonaUpdate.cerrar();
+		}
 	}
 
 	private void mostrarReporte(ActionEvent r) {
 		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
-		reporte.mostrar();	
+		reporte.mostrar();
 	}
 
-	public void borrarPersona(ActionEvent s)
-	{
+	public void borrarPersona(ActionEvent s) {
 		int[] filasSeleccionadas = this.vista.getTablaPersonas().getSelectedRows();
-		for (int fila : filasSeleccionadas)
-		{
+		for (int fila : filasSeleccionadas) {
 			this.agenda.borrarPersona(this.personasEnTabla.get(fila));
 		}
-		
+
 		this.refrescarTabla();
 	}
 
@@ -254,7 +267,9 @@ public class Controlador implements ActionListener
 		if (!this.personasEnTabla.stream().anyMatch(p -> p.getTipoContacto().equals(tipoContactoSeleccionado)))
 			this.agenda.borrarTipoContacto(tipoContactoSeleccionado);
 		else
-			JOptionPane.showMessageDialog(this.ventanaTipoContacto, String.format("No se puede eliminar la entidad '%s' porque al menos una persona pertenece a este Tipo de Contacto.", tipoContactoSeleccionado.getNombre()));
+			JOptionPane.showMessageDialog(this.ventanaTipoContacto, String.format(
+					"No se puede eliminar la entidad '%s' porque al menos una persona pertenece a este Tipo de Contacto.",
+					tipoContactoSeleccionado.getNombre()));
 
 		this.refrescarListaTipoContacto();
 	}
@@ -283,7 +298,7 @@ public class Controlador implements ActionListener
 		this.localidadesEnLista = agenda.obtenerLocalidades();
 		this.ventanaPersonaUpdate.llenarComboLocalidades(localidadesEnLista);
 	}
-	
+
 	private void refrescarListaPaises() {
 		this.paisesEnLista = agenda.obtenerPaises();
 		this.ventanaUbicaciones.llenarListaPais(paisesEnLista);
@@ -298,9 +313,8 @@ public class Controlador implements ActionListener
 		this.localidadesEnLista = agenda.obtenerLocalidades();
 		this.ventanaUbicaciones.llenarListaLocalidades(localidadesEnLista);
 	}
-	
-	public void inicializar()
-	{
+
+	public void inicializar() {
 		this.refrescarTabla();
 		this.refrescarListaPaises();
 		this.refrescarListaProvincias();
@@ -308,14 +322,14 @@ public class Controlador implements ActionListener
 		this.refrescarListaTipoContacto();
 		this.vista.show();
 	}
-	
-	private void refrescarTabla()
-	{
+
+	private void refrescarTabla() {
 		this.personasEnTabla = agenda.obtenerPersonas();
 		this.vista.llenarTabla(this.personasEnTabla);
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) { }
-		
+	public void actionPerformed(ActionEvent e) {
+	}
+
 }

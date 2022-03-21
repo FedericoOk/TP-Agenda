@@ -18,14 +18,14 @@ public class DomicilioDTO {
     private int id;
 
     private String calle;
-    private int altura;
+    private String altura;
     private String piso;
     private String depto;
-    
+
     @OneToOne
     private LocalidadDTO localidad;
 
-    public DomicilioDTO(String calle, int altura, String piso, String depto, LocalidadDTO localidad) {
+    public DomicilioDTO(String calle, String altura, String piso, String depto, LocalidadDTO localidad) {
         this.calle = calle;
         this.altura = altura;
         this.piso = piso;

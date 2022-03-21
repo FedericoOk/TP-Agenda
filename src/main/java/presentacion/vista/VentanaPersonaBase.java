@@ -1,6 +1,7 @@
 package presentacion.vista;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import com.toedter.calendar.JDateChooser;
@@ -19,42 +21,41 @@ import dto.LocalidadDTO;
 import dto.PersonaDTO;
 import dto.TipoContacto;
 
-public abstract class VentanaPersonaBase extends JFrame 
-{
+public abstract class VentanaPersonaBase extends JFrame {
 	protected static final long serialVersionUID = 1L;
 	protected JPanel contentPane;
 	protected JTextField txtNombre;
-	protected JTextField txtTelefono;
+	protected JFormattedTextField txtTelefono;
 	protected JTextField txtEmail;
 	protected JDateChooser jDateChooser;
 	protected JComboBox<TipoContacto> jComboBoxTipoContacto;
 	protected JTextField txtCalle;
-	protected JFormattedTextField numAltura;
-	protected JTextField txtPiso;
+	protected JFormattedTextField txtAltura;
+	protected JFormattedTextField txtPiso;
 	protected JTextField txtDepto;
 	protected JComboBox<LocalidadDTO> jComboBoxLocalidad;
 	protected JButton btnAceptar;
+	protected MaskFormatter mask;
 
-	protected VentanaPersonaBase(String title) 
-	{
+	protected VentanaPersonaBase(String title) {
 		super(title);
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 343, 511);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 307, 451);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblNombreYApellido = new JLabel("Nombre y apellido");
 		lblNombreYApellido.setBounds(10, 11, 113, 14);
 		panel.add(lblNombreYApellido);
-		
+
 		JLabel lblTelfono = new JLabel("Telefono");
 		lblTelfono.setBounds(10, 52, 113, 14);
 		panel.add(lblTelfono);
@@ -90,26 +91,34 @@ public abstract class VentanaPersonaBase extends JFrame
 		JLabel lblLocalidad = new JLabel("Localidad");
 		lblLocalidad.setBounds(10, 380, 113, 14);
 		panel.add(lblLocalidad);
-		
+
 		txtNombre = new JTextField();
 		txtNombre.setBounds(133, 8, 164, 20);
 		panel.add(txtNombre);
 		txtNombre.setColumns(10);
-		
-		txtTelefono = new JTextField();
+
+		try {
+			mask = new MaskFormatter("(###) ####-####");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mask.setPlaceholderCharacter('_');
+
+		txtTelefono = new JFormattedTextField(mask);
 		txtTelefono.setBounds(133, 49, 164, 20);
 		panel.add(txtTelefono);
 		txtTelefono.setColumns(10);
-		
+
 		txtEmail = new JTextField();
 		txtEmail.setBounds(133, 90, 164, 20);
 		panel.add(txtEmail);
 		txtEmail.setColumns(10);
-		
+
 		jDateChooser = new JDateChooser("dd/MM/yyyy", "##/##/##", '_');
 		jDateChooser.setBounds(133, 131, 164, 20);
 		panel.add(jDateChooser);
-		
+
 		jComboBoxTipoContacto = new JComboBox<>();
 		jComboBoxTipoContacto.setBounds(133, 172, 164, 20);
 		panel.add(jComboBoxTipoContacto);
@@ -126,12 +135,12 @@ public abstract class VentanaPersonaBase extends JFrame
 		formatter.setMaximum(Integer.MAX_VALUE);
 		formatter.setAllowsInvalid(false);
 
-		numAltura = new JFormattedTextField(format);
-		numAltura.setBounds(133, 254, 164, 20);
-		panel.add(numAltura);
-		numAltura.setColumns(10);
+		txtAltura = new JFormattedTextField(format);
+		txtAltura.setBounds(133, 254, 164, 20);
+		panel.add(txtAltura);
+		txtAltura.setColumns(10);
 
-		txtPiso = new JTextField();
+		txtPiso = new JFormattedTextField(format);
 		txtPiso.setBounds(133, 295, 164, 20);
 		panel.add(txtPiso);
 		txtPiso.setColumns(10);
@@ -148,27 +157,25 @@ public abstract class VentanaPersonaBase extends JFrame
 		btnAceptar = new JButton();
 		btnAceptar.setBounds(208, 420, 89, 23);
 		panel.add(btnAceptar);
-		
+
 		this.setVisible(false);
 	}
-	
-	public void mostrarVentana(PersonaDTO personaDTO)
-	{
+
+	public void mostrarVentana(PersonaDTO personaDTO) {
 		this.txtNombre.setText(personaDTO.getNombre());
 		this.txtTelefono.setText(personaDTO.getTelefono());
 		this.txtEmail.setText(personaDTO.getEmail());
 		this.jDateChooser.setDate(personaDTO.getNacimiento());
 		this.jComboBoxTipoContacto.setSelectedItem(personaDTO.getTipoContacto());
 		this.txtCalle.setText(personaDTO.getDomicilio().getCalle());
-		this.numAltura.setText(Integer.toString(personaDTO.getDomicilio().getAltura()));
+		this.txtAltura.setText(personaDTO.getDomicilio().getAltura());
 		this.txtPiso.setText(personaDTO.getDomicilio().getPiso());
 		this.txtDepto.setText(personaDTO.getDomicilio().getDepto());
 		this.jComboBoxLocalidad.setSelectedItem(personaDTO.getDomicilio().getLocalidad());
 		this.setVisible(true);
 	}
 
-	public void mostrarVentana()
-	{
+	public void mostrarVentana() {
 		this.jComboBoxTipoContacto.setSelectedIndex(-1);
 		this.jComboBoxLocalidad.setSelectedIndex(-1);
 		this.setVisible(true);
@@ -185,24 +192,20 @@ public abstract class VentanaPersonaBase extends JFrame
 		for (LocalidadDTO localidad : localidadesEnLista)
 			this.jComboBoxLocalidad.addItem(localidad);
 	}
-	
-	public JTextField getTxtNombre() 
-	{
+
+	public JTextField getTxtNombre() {
 		return txtNombre;
 	}
 
-	public JTextField getTxtTelefono() 
-	{
+	public JTextField getTxtTelefono() {
 		return txtTelefono;
 	}
 
-	public JTextField getTxtEmail() 
-	{
+	public JTextField getTxtEmail() {
 		return txtEmail;
 	}
 
-	public JDateChooser getDateChooser() 
-	{
+	public JDateChooser getDateChooser() {
 		return jDateChooser;
 	}
 
@@ -215,7 +218,7 @@ public abstract class VentanaPersonaBase extends JFrame
 	}
 
 	public JFormattedTextField getTxtAltura() {
-		return numAltura;
+		return txtAltura;
 	}
 
 	public JTextField getTxtPiso() {
@@ -230,15 +233,18 @@ public abstract class VentanaPersonaBase extends JFrame
 		return jComboBoxLocalidad;
 	}
 
-	public void cerrar()
-	{
+	public void cerrar() {
 		this.txtNombre.setText(null);
 		this.txtTelefono.setText(null);
 		this.txtEmail.setText(null);
 		this.jDateChooser.setDate(null);
 		this.jComboBoxTipoContacto.setSelectedIndex(-1);
+		this.jComboBoxLocalidad.setSelectedIndex(-1);
+		this.txtCalle.setText(null);
+		this.txtDepto.setText(null);
+		this.txtAltura.setText(null);
+		this.txtPiso.setText(null);
 		this.dispose();
 	}
-	
-}
 
+}
