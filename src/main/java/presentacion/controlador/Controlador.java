@@ -106,9 +106,12 @@ public class Controlador implements ActionListener {
 		String altura = this.ventanaPersonaInsert.getTxtAltura().getText();
 		String piso = this.ventanaPersonaInsert.getTxtPiso().getText();
 		String depto = this.ventanaPersonaInsert.getTxtDepto().getText();
+		String plataformaAlmacenamiento = this.ventanaPersonaInsert.getTxtPlataformaAlmacenamiento().getText();
 		LocalidadDTO localidad = (LocalidadDTO) this.ventanaPersonaInsert.getJComboLocalidad().getSelectedItem();
 		DomicilioDTO domicilio = new DomicilioDTO(calle, altura, piso, depto, localidad);
-		PersonaDTO nuevaPersona = new PersonaDTO(nombre, tel, email, nacimiento, tipoContacto, domicilio);
+		String mesNacimiento = (String) this.ventanaPersonaInsert.getComboMesNacimiento().getSelectedItem();
+		PersonaDTO nuevaPersona = new PersonaDTO(nombre, tel, email, nacimiento, tipoContacto, domicilio,
+				plataformaAlmacenamiento, mesNacimiento);
 		if (nombre.isEmpty() || tel.equals("(___) ____-____") || email.isEmpty()) {
 			JOptionPane.showMessageDialog(this.ventanaPersonaInsert,
 					"El contacto debe tener al menos Nombre , Telefono y Email.");
@@ -130,6 +133,8 @@ public class Controlador implements ActionListener {
 		String altura = this.ventanaPersonaUpdate.getTxtAltura().getText();
 		String piso = this.ventanaPersonaUpdate.getTxtPiso().getText();
 		String depto = this.ventanaPersonaUpdate.getTxtDepto().getText();
+		String mesNacimiento = (String) this.ventanaPersonaUpdate.getComboMesNacimiento().getSelectedItem();
+		String plataformaAlmacenamiento = this.ventanaPersonaUpdate.getTxtPlataformaAlmacenamiento().getText();
 		TipoContacto tipoContacto = (TipoContacto) this.ventanaPersonaUpdate.getComboTipoContacto().getSelectedItem();
 		LocalidadDTO localidad = (LocalidadDTO) this.ventanaPersonaUpdate.getJComboLocalidad().getSelectedItem();
 		PersonaDTO persona = obtenerPersonaSeleccionada();
@@ -138,6 +143,8 @@ public class Controlador implements ActionListener {
 		persona.setEmail(email);
 		persona.setNacimiento(nacimiento);
 		persona.setTipoContacto(tipoContacto);
+		persona.setMesNacimiento(mesNacimiento);
+		persona.setPlataformaAlmacenamiento(plataformaAlmacenamiento);
 		persona.getDomicilio().setCalle(calle);
 		persona.getDomicilio().setAltura(altura);
 		persona.getDomicilio().setPiso(piso);
@@ -314,12 +321,18 @@ public class Controlador implements ActionListener {
 		this.ventanaUbicaciones.llenarListaLocalidades(localidadesEnLista);
 	}
 
+	private void refrescarListaComboMesNacimiento() {
+		this.ventanaPersonaInsert.llenarComboMesNacimiento();
+		this.ventanaPersonaUpdate.llenarComboMesNacimiento();
+	}
+
 	public void inicializar() {
 		this.refrescarTabla();
 		this.refrescarListaPaises();
 		this.refrescarListaProvincias();
 		this.refrescarListaLocalidades();
 		this.refrescarListaTipoContacto();
+		this.refrescarListaComboMesNacimiento();
 		this.vista.show();
 	}
 

@@ -211,28 +211,28 @@ public class SeedData {
 			DomicilioDTO domicilio1 = new DomicilioDTO("Avenida Siempreviva", "742", "0", "",
 					localidades.get(random.nextInt(localidades.size())));
 			PersonaDTO persona1 = new PersonaDTO("Homero Simpson", "123456", "homer@donuts.com",
-					dateFormat.parse("2020-03-01"), filterByName(tiposDeContacto, "Familia"), domicilio1);
+					dateFormat.parse("2020-03-01"), filterByName(tiposDeContacto, "Familia"), domicilio1, null, null);
 			// persona1.addDomicilio(domicilio1);
 			contactos.add(persona1);
 
 			DomicilioDTO domicilio2 = new DomicilioDTO("Avenida Siempreviva", "742", "", "",
 					localidades.get(random.nextInt(localidades.size())));
 			PersonaDTO persona2 = new PersonaDTO("Marge Simpson", "987654", "marge@hotmail.com",
-					dateFormat.parse("2020-03-04"), filterByName(tiposDeContacto, "Amigos"), domicilio2);
+					dateFormat.parse("2020-03-04"), filterByName(tiposDeContacto, "Amigos"), domicilio2, null, null);
 			// persona2.addDomicilio(domicilio2);
 			contactos.add(persona2);
 
 			DomicilioDTO domicilio3 = new DomicilioDTO("Calle Falsa", "123", "", "",
 					localidades.get(random.nextInt(localidades.size())));
 			PersonaDTO persona3 = new PersonaDTO("Bart Simpson", "666666", "elbarto@gmail.com",
-					dateFormat.parse("2006-06-06"), filterByName(tiposDeContacto, "Familia"), domicilio3);
+					dateFormat.parse("2006-06-06"), filterByName(tiposDeContacto, "Familia"), domicilio3, null, null);
 			// persona3.addDomicilio(domicilio3);
 			contactos.add(persona3);
 
 			DomicilioDTO domicilio4 = new DomicilioDTO("All Vegetables", "2718", "2", "e",
 					localidades.get(random.nextInt(localidades.size())));
 			PersonaDTO persona4 = new PersonaDTO("Lisa Simpson", "3141592653", "jazzrules@realponies",
-					dateFormat.parse("2020-03-27"), filterByName(tiposDeContacto, "Trabajo"), domicilio4);
+					dateFormat.parse("2020-03-27"), filterByName(tiposDeContacto, "Trabajo"), domicilio4, null, null);
 			// persona4.addDomicilio(domicilio4);
 			contactos.add(persona4);
 

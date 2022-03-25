@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-03-06T22:23:14 -->
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="284e0c88-a4b2-4ff8-98a2-d67b80bcffaf">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="Fecha" class="java.lang.String"/>
@@ -13,13 +12,39 @@
 	<field name="nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[nombre]]></fieldDescription>
 	</field>
+	<field name="mesNacimiento" class="java.lang.String">
+		<fieldDescription><![CDATA[mesNacimiento]]></fieldDescription>
+	</field>
+	<group name="GroupmesNacimiento" minHeightToStartNewPage="20">
+		<groupExpression><![CDATA[$F{mesNacimiento}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="0" y="10" width="552" height="31" backcolor="#FCC6C5" uuid="018f943e-55dd-4deb-8ba6-0c002455efba"/>
+					<textElement>
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mesNacimiento}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+			<band height="50">
+				<textField>
+					<reportElement x="120" y="16" width="431" height="21" uuid="d4915d9a-a66e-4f57-830d-1479221b6a7f"/>
+					<textFieldExpression><![CDATA[$V{GroupmesNacimiento_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="45" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="550" height="40" uuid="fbf866cd-64dc-4043-b98c-ed8d9f31d19c"/>
+				<reportElement x="0" y="0" width="550" height="40" backcolor="#FF918F" uuid="fbf866cd-64dc-4043-b98c-ed8d9f31d19c"/>
 				<staticText>
 					<reportElement x="0" y="10" width="170" height="30" uuid="df09700e-f0a8-43aa-a9d6-1430d1a7476d"/>
 					<textElement>
@@ -54,15 +79,15 @@
 			<frame>
 				<reportElement x="2" y="6" width="550" height="23" uuid="23209a62-cc9d-4b81-8e93-aa9cc3a92b36"/>
 				<staticText>
-					<reportElement x="0" y="0" width="280" height="21" uuid="6f5462fa-eb72-479f-bb27-fb5ef7144791"/>
-					<textElement textAlignment="Center">
+					<reportElement x="10" y="4" width="200" height="21" uuid="6f5462fa-eb72-479f-bb27-fb5ef7144791"/>
+					<textElement textAlignment="Left">
 						<font size="14"/>
 					</textElement>
 					<text><![CDATA[Nombre y apellido]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="280" y="0" width="100" height="20" uuid="e2252ea3-811b-43d8-ae6b-e9b261b705f9"/>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Left">
 						<font size="14"/>
 					</textElement>
 					<text><![CDATA[Teléfono]]></text>
@@ -71,7 +96,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<textField>
 				<reportElement x="5" y="0" width="225" height="18" uuid="4a345b01-b751-4529-b6d6-2ccf3c13ff66"/>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
@@ -83,20 +108,28 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="33" splitType="Stretch">
-			<textField>
-				<reportElement x="355" y="0" width="100" height="30" uuid="5ce007da-8e81-48b7-91fd-8e603c20d7ef"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="455" y="0" width="100" height="30" uuid="52b869cb-a151-48f6-ad3c-3147a8d111e8"/>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+	<summary>
+		<band height="343">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="40" y="60" width="480" height="200" uuid="1885c38a-0cdc-44bc-9c8f-223574cd5118"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset maxCount="12">
+					<dataset resetType="None" incrementType="Group" incrementGroup="GroupmesNacimiento"/>
+					<keyExpression><![CDATA[$F{mesNacimiento}]]></keyExpression>
+					<valueExpression><![CDATA[$V{GroupmesNacimiento_COUNT}]]></valueExpression>
+					<labelExpression><![CDATA[$F{mesNacimiento}]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
 		</band>
-	</pageFooter>
+	</summary>
 </jasperReport>

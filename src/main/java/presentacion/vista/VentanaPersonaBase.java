@@ -33,7 +33,9 @@ public abstract class VentanaPersonaBase extends JFrame {
 	protected JFormattedTextField txtAltura;
 	protected JFormattedTextField txtPiso;
 	protected JTextField txtDepto;
+	protected JTextField txtPlataformaAlmacenamiento;
 	protected JComboBox<LocalidadDTO> jComboBoxLocalidad;
+	protected JComboBox<String> jComboBoxMesNacimiento;
 	protected JButton btnAceptar;
 	protected MaskFormatter mask;
 
@@ -41,14 +43,14 @@ public abstract class VentanaPersonaBase extends JFrame {
 		super(title);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 343, 511);
+		setBounds(100, 100, 343, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 307, 451);
+		panel.setBounds(10, 11, 307, 600);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -91,6 +93,14 @@ public abstract class VentanaPersonaBase extends JFrame {
 		JLabel lblLocalidad = new JLabel("Localidad");
 		lblLocalidad.setBounds(10, 380, 113, 14);
 		panel.add(lblLocalidad);
+
+		JLabel lblPlataformaAlmacenamiento = new JLabel("Plataforma de Alm.");
+		lblPlataformaAlmacenamiento.setBounds(10, 421, 113, 14);
+		panel.add(lblPlataformaAlmacenamiento);
+
+		JLabel lblMesNacimiento = new JLabel("Mes de Nacimiento");
+		lblMesNacimiento.setBounds(10, 461, 113, 14);
+		panel.add(lblMesNacimiento);
 
 		txtNombre = new JTextField();
 		txtNombre.setBounds(133, 8, 164, 20);
@@ -154,8 +164,17 @@ public abstract class VentanaPersonaBase extends JFrame {
 		jComboBoxLocalidad.setBounds(133, 377, 164, 20);
 		panel.add(jComboBoxLocalidad);
 
+		txtPlataformaAlmacenamiento = new JTextField();
+		txtPlataformaAlmacenamiento.setBounds(133, 418, 164, 20);
+		panel.add(txtPlataformaAlmacenamiento);
+		txtPlataformaAlmacenamiento.setColumns(10);
+
+		jComboBoxMesNacimiento = new JComboBox<String>();
+		jComboBoxMesNacimiento.setBounds(133, 459, 164, 20);
+		panel.add(jComboBoxMesNacimiento);
+
 		btnAceptar = new JButton();
-		btnAceptar.setBounds(208, 420, 89, 23);
+		btnAceptar.setBounds(208, 500, 89, 23);
 		panel.add(btnAceptar);
 
 		this.setVisible(false);
@@ -171,7 +190,9 @@ public abstract class VentanaPersonaBase extends JFrame {
 		this.txtAltura.setText(personaDTO.getDomicilio().getAltura());
 		this.txtPiso.setText(personaDTO.getDomicilio().getPiso());
 		this.txtDepto.setText(personaDTO.getDomicilio().getDepto());
+		this.txtPlataformaAlmacenamiento.setText(personaDTO.getPlataformaAlmacenamiento());
 		this.jComboBoxLocalidad.setSelectedItem(personaDTO.getDomicilio().getLocalidad());
+		this.jComboBoxMesNacimiento.setSelectedItem(personaDTO.getMesNacimiento());
 		this.setVisible(true);
 	}
 
@@ -191,6 +212,13 @@ public abstract class VentanaPersonaBase extends JFrame {
 		this.jComboBoxLocalidad.removeAllItems();
 		for (LocalidadDTO localidad : localidadesEnLista)
 			this.jComboBoxLocalidad.addItem(localidad);
+	}
+
+	public void llenarComboMesNacimiento() {
+		String[] Meses = new String[] { "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+				"Septiembre", "Octubre", "Noviembre", "Diciembre" };
+		for (String mes : Meses)
+			jComboBoxMesNacimiento.addItem(mes);
 	}
 
 	public JTextField getTxtNombre() {
@@ -213,6 +241,10 @@ public abstract class VentanaPersonaBase extends JFrame {
 		return this.jComboBoxTipoContacto;
 	}
 
+	public JComboBox<String> getComboMesNacimiento() {
+		return this.jComboBoxMesNacimiento;
+	}
+
 	public JTextField getTxtCalle() {
 		return txtCalle;
 	}
@@ -229,6 +261,10 @@ public abstract class VentanaPersonaBase extends JFrame {
 		return txtDepto;
 	}
 
+	public JTextField getTxtPlataformaAlmacenamiento() {
+		return txtPlataformaAlmacenamiento;
+	}
+
 	public JComboBox<LocalidadDTO> getJComboLocalidad() {
 		return jComboBoxLocalidad;
 	}
@@ -240,10 +276,12 @@ public abstract class VentanaPersonaBase extends JFrame {
 		this.jDateChooser.setDate(null);
 		this.jComboBoxTipoContacto.setSelectedIndex(-1);
 		this.jComboBoxLocalidad.setSelectedIndex(-1);
+		this.jComboBoxMesNacimiento.setSelectedIndex(-1);
 		this.txtCalle.setText(null);
 		this.txtDepto.setText(null);
 		this.txtAltura.setText(null);
 		this.txtPiso.setText(null);
+		this.txtPlataformaAlmacenamiento.setText(null);
 		this.dispose();
 	}
 
