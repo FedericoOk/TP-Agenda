@@ -43,7 +43,8 @@ public class Controlador implements ActionListener {
 		this.vista.getBtnAgregar().addActionListener(a -> ventanaAgregarPersona(a));
 		this.vista.getBtnEditar().addActionListener(a -> ventanaEditarPersona(a));
 		this.vista.getBtnBorrar().addActionListener(s -> borrarPersona(s));
-		this.vista.getBtnReporte().addActionListener(r -> mostrarReporte(r));
+		this.vista.getBtnReporte1().addActionListener(r -> mostrarReporte(r, "ReporteAgenda1.jasper"));
+		this.vista.getBtnReporte2().addActionListener(r -> mostrarReporte(r, "ReporteAgenda2.jasper"));
 		this.vista.getMenuItemUbicaciones().addActionListener(e -> ventanaUbicaciones(e));
 		this.vista.getMenuItemTipoContacto().addActionListener(m -> ventanaTipoContacto(m));
 
@@ -162,8 +163,8 @@ public class Controlador implements ActionListener {
 		}
 	}
 
-	private void mostrarReporte(ActionEvent r) {
-		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+	private void mostrarReporte(ActionEvent r, String reportepath) {
+		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(), reportepath);
 		reporte.mostrar();
 	}
 

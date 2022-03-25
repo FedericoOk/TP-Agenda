@@ -169,7 +169,7 @@ public abstract class VentanaPersonaBase extends JFrame {
 		panel.add(txtPlataformaAlmacenamiento);
 		txtPlataformaAlmacenamiento.setColumns(10);
 
-		jComboBoxMesNacimiento = new JComboBox<String>();
+		jComboBoxMesNacimiento = new JComboBox<>();
 		jComboBoxMesNacimiento.setBounds(133, 459, 164, 20);
 		panel.add(jComboBoxMesNacimiento);
 
@@ -215,7 +215,8 @@ public abstract class VentanaPersonaBase extends JFrame {
 	}
 
 	public void llenarComboMesNacimiento() {
-		String[] Meses = new String[] { "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+		this.jComboBoxMesNacimiento.removeAllItems();
+		String[] Meses = new String[] { null, "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
 				"Septiembre", "Octubre", "Noviembre", "Diciembre" };
 		for (String mes : Meses)
 			jComboBoxMesNacimiento.addItem(mes);

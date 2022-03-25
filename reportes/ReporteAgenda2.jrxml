@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df191edb-7ade-44b3-aa0e-439ae79c3178">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="Fecha" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[nombre]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[telefono]]></fieldDescription>
+	</field>
+	<field name="plataformaAlmacenamiento" class="java.lang.String">
+		<fieldDescription><![CDATA[plataformaAlmacenamiento]]></fieldDescription>
+	</field>
+	<group name="GroupPlataformaAlmacenamiento">
+		<groupExpression><![CDATA[$F{plataformaAlmacenamiento}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="5" width="550" height="40" backcolor="#FFB5B3" uuid="6e2777eb-2503-4fe2-873d-612362e8158c"/>
+					<textField>
+						<reportElement mode="Transparent" x="10" y="10" width="180" height="20" uuid="155cee06-9173-472e-a858-b79ca377bb92"/>
+						<textElement>
+							<font size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{plataformaAlmacenamiento}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<textField>
+					<reportElement x="40" y="2" width="436" height="20" uuid="de615957-9d75-43bd-be5a-62b47ca6aeea"/>
+					<textFieldExpression><![CDATA[$V{GroupPlataformaAlmacenamiento_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="3" y="0" width="77" height="20" uuid="e6a547f3-cfa2-4629-8692-0701143dd313"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total: "]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="10" width="550" height="40" backcolor="#FF918F" uuid="ad89cd89-ed1d-46b1-aa95-4df3e4af620d"/>
+				<staticText>
+					<reportElement x="0" y="10" width="240" height="30" uuid="44c77121-d518-496d-83da-28628f74acec"/>
+					<textElement>
+						<font size="18"/>
+					</textElement>
+					<text><![CDATA[  Reporte de personas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="390" y="2" width="102" height="20" uuid="e9e7202a-aeb3-472b-ba52-b702143c5387"/>
+					<text><![CDATA[Reporte generado el:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="489" y="2" width="56" height="20" uuid="ed398057-404f-4201-92d4-fd7aeed81a75"/>
+					<textFieldExpression><![CDATA[$P{Fecha}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="160" height="20" uuid="0cc395e1-f203-4bf9-8eb7-8f7b7d3d8f66"/>
+				<text><![CDATA[Reporte para el tp Agenda]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<frame>
+				<reportElement x="2" y="6" width="558" height="25" uuid="4d742394-92cd-4e28-9a9e-84b5858bd8f3"/>
+				<staticText>
+					<reportElement x="10" y="0" width="200" height="21" uuid="84233d3f-6070-4eb6-99eb-28867d8d1902"/>
+					<textElement textAlignment="Left">
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[Nombre y apellido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="290" y="0" width="100" height="20" uuid="f953d714-d84b-4ec2-b510-af299dc87993"/>
+					<textElement textAlignment="Left">
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[Teléfono]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="-1" width="225" height="18" uuid="7f4391d4-a007-4ed9-b3a2-7b2a389804fe"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="215" height="18" uuid="ffc1ad81-35e8-411a-8878-55749251389e"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="308" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="10" width="520" height="250" uuid="4e09e3ab-eb3a-4139-b6ce-358d04dfb4ca"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="Report" incrementType="Group" incrementGroup="GroupPlataformaAlmacenamiento"/>
+					<keyExpression><![CDATA[$F{plataformaAlmacenamiento}]]></keyExpression>
+					<valueExpression><![CDATA[$V{GroupPlataformaAlmacenamiento_COUNT}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

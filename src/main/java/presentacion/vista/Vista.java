@@ -23,40 +23,37 @@ import javax.swing.JButton;
 import persistencia.conexion.Conexion;
 import persistencia.conexion.EntityManagers;
 
-public class Vista
-{
+public class Vista {
 	private JFrame frame;
 	private JTable tablaPersonas;
 	private JButton btnAgregar;
 	private JButton btnEditar;
 	private JButton btnBorrar;
-	private JButton btnReporte;
+	private JButton btnReporte1;
+	private JButton btnReporte2;
 	private JMenuItem menuItemTipoContacto;
 	private JMenuItem menuItemUbicaciones;
 	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Telefono","Email","Nacimiento","TipoContacto"};
+	private String[] nombreColumnas = { "Nombre y apellido", "Telefono", "Email", "Nacimiento", "TipoContacto" };
 
-	public Vista() 
-	{
+	public Vista() {
 		super();
 		initialize();
 	}
 
-
-	private void initialize() 
-	{
+	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1071, 370);
+		frame.setBounds(100, 100, 1047, 370);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 1055, 312);
+		panel.setBounds(0, 0, 1020, 312);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 1035, 232);
+		spPersonas.setBounds(10, 11, 1010, 232);
 		panel.add(spPersonas);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -64,16 +61,16 @@ public class Vista
 
 		JMenu menu = new JMenu("ABM");
 		menuBar.add(menu);
-		
+
 		menuItemTipoContacto = new JMenuItem("Tipo Contacto");
 		menu.add(menuItemTipoContacto);
 
 		menuItemUbicaciones = new JMenuItem("Ubicaciones");
 		menu.add(menuItemUbicaciones);
-		
+
 		modelPersonas = new DefaultTableModel(null, nombreColumnas);
 		tablaPersonas = new JTable(modelPersonas);
-		
+
 		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(103);
 		tablaPersonas.getColumnModel().getColumn(0).setResizable(false);
 		tablaPersonas.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -84,79 +81,79 @@ public class Vista
 		tablaPersonas.getColumnModel().getColumn(3).setResizable(false);
 		tablaPersonas.getColumnModel().getColumn(4).setPreferredWidth(100);
 		tablaPersonas.getColumnModel().getColumn(4).setResizable(false);
-		
+
 		spPersonas.setViewportView(tablaPersonas);
-		
+
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(10, 278, 89, 23);
 		panel.add(btnAgregar);
-		
+
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(326, 278, 89, 23);
+		btnEditar.setBounds(240, 278, 89, 23);
 		panel.add(btnEditar);
-		
+
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(641, 278, 89, 23);
+		btnBorrar.setBounds(470, 278, 89, 23);
 		panel.add(btnBorrar);
-		
-		btnReporte = new JButton("Reporte");
-		btnReporte.setBounds(956, 278, 89, 23);
-		panel.add(btnReporte);
+
+		btnReporte1 = new JButton("1° Reporte");
+		btnReporte1.setBounds(700, 278, 95, 23);
+		panel.add(btnReporte1);
+
+		btnReporte2 = new JButton("2° Reporte");
+		btnReporte2.setBounds(925, 278, 95, 23);
+		panel.add(btnReporte2);
 	}
-	
-	public void show()
-	{
+
+	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.frame.addWindowListener(new WindowAdapter() 
-		{
+		this.frame.addWindowListener(new WindowAdapter() {
 			@Override
-		    public void windowClosing(WindowEvent e) {
-		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estás seguro que quieres salir de la Agenda?", 
-		             "Confirmación", JOptionPane.YES_NO_OPTION,
-		             JOptionPane.QUESTION_MESSAGE, null, null, null);
-		        if (confirm == 0) {
-		        	Conexion.getConexion().cerrarConexion(); // TODO: ¿Esto no se debería pasar como argumento en el controller?
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(
+						null, "¿Estás seguro que quieres salir de la Agenda?",
+						"Confirmación", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					Conexion.getConexion().cerrarConexion(); // TODO: ¿Esto no se debería pasar como argumento en el
+																// controller?
 					EntityManagers.close();
-		           	System.exit(0);
-		        }
-		    }
+					System.exit(0);
+				}
+			}
 		});
 		this.frame.setVisible(true);
 	}
-	
-	public JButton getBtnAgregar() 
-	{
+
+	public JButton getBtnAgregar() {
 		return btnAgregar;
 	}
 
-	public JButton getBtnEditar() 
-	{
+	public JButton getBtnEditar() {
 		return btnEditar;
 	}
 
-	public JButton getBtnBorrar() 
-	{
+	public JButton getBtnBorrar() {
 		return btnBorrar;
 	}
-	
-	public JButton getBtnReporte() 
-	{
-		return btnReporte;
+
+	public JButton getBtnReporte1() {
+		return btnReporte1;
 	}
-	
-	public DefaultTableModel getModelPersonas() 
-	{
+
+	public JButton getBtnReporte2() {
+		return btnReporte2;
+	}
+
+	public DefaultTableModel getModelPersonas() {
 		return modelPersonas;
 	}
-	
-	public JTable getTablaPersonas()
-	{
+
+	public JTable getTablaPersonas() {
 		return tablaPersonas;
 	}
 
-	public String[] getNombreColumnas() 
-	{
+	public String[] getNombreColumnas() {
 		return nombreColumnas;
 	}
 
@@ -169,18 +166,17 @@ public class Vista
 	}
 
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {
-		this.getModelPersonas().setRowCount(0); //Para vaciar la tabla
+		this.getModelPersonas().setRowCount(0); // Para vaciar la tabla
 		this.getModelPersonas().setColumnCount(0);
 		this.getModelPersonas().setColumnIdentifiers(this.getNombreColumnas());
 
-		for (PersonaDTO p : personasEnTabla)
-		{
+		for (PersonaDTO p : personasEnTabla) {
 			String nombre = p.getNombre();
 			String tel = p.getTelefono();
 			String email = p.getEmail();
 			Date nacimiento = p.getNacimiento();
 			TipoContacto tipoContacto = p.getTipoContacto();
-			Object[] fila = {nombre, tel, email, nacimiento, tipoContacto};
+			Object[] fila = { nombre, tel, email, nacimiento, tipoContacto };
 			this.getModelPersonas().addRow(fila);
 		}
 	}
