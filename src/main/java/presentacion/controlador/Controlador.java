@@ -164,7 +164,8 @@ public class Controlador implements ActionListener {
 	}
 
 	private void mostrarReporte(ActionEvent r, String reportepath) {
-		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(), reportepath);
+		String ordenamiento = (String) this.vista.getComboSort().getSelectedItem();
+		ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(), reportepath, ordenamiento);
 		reporte.mostrar();
 	}
 

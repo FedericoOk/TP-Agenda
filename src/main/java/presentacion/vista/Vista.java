@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -19,6 +20,7 @@ import dto.PersonaDTO;
 import dto.TipoContacto;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 import persistencia.conexion.Conexion;
 import persistencia.conexion.EntityManagers;
@@ -34,6 +36,7 @@ public class Vista {
 	private JMenuItem menuItemTipoContacto;
 	private JMenuItem menuItemUbicaciones;
 	private DefaultTableModel modelPersonas;
+	private JComboBox<String> jComboBoxSort;
 	private String[] nombreColumnas = { "Nombre y apellido", "Telefono", "Email", "Nacimiento", "TipoContacto" };
 
 	public Vista() {
@@ -43,12 +46,12 @@ public class Vista {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1047, 370);
+		frame.setBounds(100, 100, 1047, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 1020, 312);
+		panel.setBounds(0, 0, 1020, 400);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -85,23 +88,35 @@ public class Vista {
 		spPersonas.setViewportView(tablaPersonas);
 
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(10, 278, 89, 23);
+		btnAgregar.setBounds(10, 300, 89, 23);
 		panel.add(btnAgregar);
 
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(240, 278, 89, 23);
+		btnEditar.setBounds(240, 300, 89, 23);
 		panel.add(btnEditar);
 
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(470, 278, 89, 23);
+		btnBorrar.setBounds(470, 300, 89, 23);
 		panel.add(btnBorrar);
 
 		btnReporte1 = new JButton("1° Reporte");
-		btnReporte1.setBounds(700, 278, 95, 23);
+		btnReporte1.setBounds(700, 300, 95, 23);
 		panel.add(btnReporte1);
 
+		JLabel lblOrdenamiento = new JLabel("Ordenamiento");
+		lblOrdenamiento.setBounds(760, 258, 95, 23);
+		panel.add(lblOrdenamiento);
+
+		jComboBoxSort = new JComboBox<>();
+		jComboBoxSort.setBounds(850, 258, 95, 23);
+		panel.add(jComboBoxSort);
+
+		this.jComboBoxSort.addItem(null);
+		this.jComboBoxSort.addItem("Descendente");
+		this.jComboBoxSort.addItem("Ascendente");
+
 		btnReporte2 = new JButton("2° Reporte");
-		btnReporte2.setBounds(925, 278, 95, 23);
+		btnReporte2.setBounds(925, 300, 95, 23);
 		panel.add(btnReporte2);
 	}
 
@@ -115,8 +130,8 @@ public class Vista {
 						"Confirmación", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
-					Conexion.getConexion().cerrarConexion(); // TODO: ¿Esto no se debería pasar como argumento en el
-																// controller?
+					Conexion.getConexion().cerrarConexion();
+
 					EntityManagers.close();
 					System.exit(0);
 				}
@@ -163,6 +178,10 @@ public class Vista {
 
 	public JMenuItem getMenuItemUbicaciones() {
 		return menuItemUbicaciones;
+	}
+
+	public JComboBox<String> getComboSort() {
+		return this.jComboBoxSort;
 	}
 
 	public void llenarTabla(List<PersonaDTO> personasEnTabla) {

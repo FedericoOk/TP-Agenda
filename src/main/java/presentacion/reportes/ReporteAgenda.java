@@ -2,6 +2,7 @@ package presentacion.reportes;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,25 @@ public class ReporteAgenda {
 	private Logger log = LogManager.getLogger(ReporteAgenda.class);
 
 	// Recibe la lista de personas para armar el reporte
-	public ReporteAgenda(List<PersonaDTO> personas, String reporte) {
-		// Hardcodeado
+
+	public ReporteAgenda(List<PersonaDTO> personas, String reporte, String ordenamiento) {
+
+		if (ordenamiento == "Ascendente" && reporte == "ReporteAgenda2.jasper")
+			Collections.sort(personas,
+					(o1, o2) -> -o1.getPlataformaAlmacenamiento().compareTo(o2.getPlataformaAlmacenamiento()));
+
+		if (ordenamiento == "Descendente" && reporte == "ReporteAgenda2.jasper")
+			Collections.sort(personas,
+					(o1, o2) -> o1.getPlataformaAlmacenamiento().compareTo(o2.getPlataformaAlmacenamiento()));
+
+		if (ordenamiento == "Ascendente" && reporte == "ReporteAgenda1.jasper")
+			Collections.sort(personas,
+					(o1, o2) -> -o1.getMesNacimiento().compareTo(o2.getMesNacimiento()));
+
+		if (ordenamiento == "Descendente" && reporte == "ReporteAgenda1.jasper")
+			Collections.sort(personas,
+					(o1, o2) -> o1.getMesNacimiento().compareTo(o2.getMesNacimiento()));
+
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
 		parametersMap.put("Fecha", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 		try {
