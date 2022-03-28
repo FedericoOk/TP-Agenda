@@ -112,11 +112,11 @@ public abstract class VentanaPersonaBase extends JFrame {
 		panel.add(lblLocalidad);
 
 		JLabel lblPlataformaAlmacenamiento = new JLabel("Plataforma de Alm.");
-		lblPlataformaAlmacenamiento.setBounds(10, 421, 113, 14);
+		lblPlataformaAlmacenamiento.setBounds(10, 503, 113, 14);
 		panel.add(lblPlataformaAlmacenamiento);
 
 		JLabel lblMesNacimiento = new JLabel("Mes de Nacimiento");
-		lblMesNacimiento.setBounds(10, 461, 113, 14);
+		lblMesNacimiento.setBounds(10, 543, 113, 14);
 		panel.add(lblMesNacimiento);
 
 		txtNombre = new JTextField();
@@ -197,16 +197,16 @@ public abstract class VentanaPersonaBase extends JFrame {
 		panel.add(jComboBoxLocalidad);
 
 		txtPlataformaAlmacenamiento = new JTextField();
-		txtPlataformaAlmacenamiento.setBounds(133, 418, 164, 20);
+		txtPlataformaAlmacenamiento.setBounds(133, 500, 164, 20);
 		panel.add(txtPlataformaAlmacenamiento);
 		txtPlataformaAlmacenamiento.setColumns(10);
 
 		jComboBoxMesNacimiento = new JComboBox<>();
-		jComboBoxMesNacimiento.setBounds(133, 459, 164, 20);
+		jComboBoxMesNacimiento.setBounds(133, 541, 164, 20);
 		panel.add(jComboBoxMesNacimiento);
 
 		btnAceptar = new JButton();
-		btnAceptar.setBounds(208, 502, 89, 23);
+		btnAceptar.setBounds(208, 584, 89, 23);
 		panel.add(btnAceptar);
 
 		this.setVisible(false);
