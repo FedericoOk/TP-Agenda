@@ -111,7 +111,6 @@ public class Vista {
 		jComboBoxSort.setBounds(850, 258, 95, 23);
 		panel.add(jComboBoxSort);
 
-		this.jComboBoxSort.addItem(null);
 		this.jComboBoxSort.addItem("Descendente");
 		this.jComboBoxSort.addItem("Ascendente");
 

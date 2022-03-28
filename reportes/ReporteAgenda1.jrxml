@@ -21,9 +21,9 @@
 	<group name="GroupmesNacimiento" minHeightToStartNewPage="20">
 		<groupExpression><![CDATA[$F{mesNacimiento}]]></groupExpression>
 		<groupHeader>
-			<band height="70">
+			<band height="49">
 				<frame>
-					<reportElement mode="Opaque" x="3" y="20" width="550" height="40" backcolor="#FFB5B3" uuid="e2caf8a4-0eb9-497a-a4bd-6e6c9e70bcad"/>
+					<reportElement mode="Opaque" x="0" y="4" width="550" height="40" backcolor="#FFB5B3" uuid="e2caf8a4-0eb9-497a-a4bd-6e6c9e70bcad"/>
 					<textField>
 						<reportElement mode="Transparent" x="10" y="10" width="180" height="20" uuid="6c2c7466-0218-425e-b021-0ec80e5d9568"/>
 						<textElement>
@@ -36,7 +36,7 @@
 		</groupHeader>
 		<groupFooter>
 			<band/>
-			<band height="25">
+			<band height="22">
 				<textField>
 					<reportElement x="40" y="2" width="436" height="20" uuid="d4915d9a-a66e-4f57-830d-1479221b6a7f"/>
 					<textFieldExpression><![CDATA[$V{GroupmesNacimiento_COUNT}]]></textFieldExpression>

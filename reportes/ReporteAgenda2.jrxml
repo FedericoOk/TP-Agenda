@@ -20,7 +20,7 @@
 		<groupHeader>
 			<band height="50">
 				<frame>
-					<reportElement mode="Opaque" x="0" y="5" width="550" height="40" backcolor="#FFB5B3" uuid="6e2777eb-2503-4fe2-873d-612362e8158c"/>
+					<reportElement mode="Opaque" x="0" y="0" width="550" height="40" backcolor="#FFB5B3" uuid="6e2777eb-2503-4fe2-873d-612362e8158c"/>
 					<textField>
 						<reportElement mode="Transparent" x="10" y="10" width="180" height="20" uuid="155cee06-9173-472e-a858-b79ca377bb92"/>
 						<textElement>
@@ -51,9 +51,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="52" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="10" width="550" height="40" backcolor="#FF918F" uuid="ad89cd89-ed1d-46b1-aa95-4df3e4af620d"/>
+				<reportElement mode="Opaque" x="0" y="0" width="550" height="40" backcolor="#FF918F" uuid="ad89cd89-ed1d-46b1-aa95-4df3e4af620d"/>
 				<staticText>
 					<reportElement x="0" y="10" width="240" height="30" uuid="44c77121-d518-496d-83da-28628f74acec"/>
 					<textElement>
@@ -81,9 +81,9 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="35" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<frame>
-				<reportElement x="2" y="6" width="558" height="25" uuid="4d742394-92cd-4e28-9a9e-84b5858bd8f3"/>
+				<reportElement x="-2" y="0" width="558" height="25" uuid="4d742394-92cd-4e28-9a9e-84b5858bd8f3"/>
 				<staticText>
 					<reportElement x="10" y="0" width="200" height="21" uuid="84233d3f-6070-4eb6-99eb-28867d8d1902"/>
 					<textElement textAlignment="Left">
