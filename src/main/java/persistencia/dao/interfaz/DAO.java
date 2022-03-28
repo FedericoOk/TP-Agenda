@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface DAO<T> {
 
-    public boolean insert(T t);
+    public T insert(T t);
 
 	public T update(T t);
 
-	public boolean delete(T t);
+	public void delete(T t);
 	
 	public List<T> readAll();
     

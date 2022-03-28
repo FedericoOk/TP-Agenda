@@ -242,7 +242,7 @@ public class SeedData {
 
 			for (PersonaDTO persona : contactos) {
 				personaDAO.insert(persona);
-				domicilioDAO.insert(persona.getDomicilio());
+				// domicilioDAO.insert(persona.getDomicilio());
 			}
 
 			System.out.println("Personas cargadas con éxito.");
