@@ -33,15 +33,17 @@ public class Agenda
 		this.provinciaDAO = metodo_persistencia.createProvinciaDAO();
 		this.localidadDAO = metodo_persistencia.createLocalidadDAO();
 	}
+
+	// -- Personas --
 	
-	public void agregarPersona(PersonaDTO nuevaPersona)
+	public PersonaDTO agregarPersona(PersonaDTO nuevaPersona)
 	{
-		this.persona.insert(nuevaPersona);
+		return this.persona.insert(nuevaPersona);
 	}
 
-	public void actualizarPersona(PersonaDTO persona)
+	public PersonaDTO actualizarPersona(PersonaDTO persona)
 	{
-		this.persona.update(persona);
+		return this.persona.update(persona);
 	}
 
 	public void borrarPersona(PersonaDTO persona_a_eliminar) 
@@ -54,12 +56,14 @@ public class Agenda
 		return this.persona.readAll();		
 	}
 
-	public void agregarTipoContacto(TipoContacto tipoContacto) {
-		this.tipoContactoDAO.insert(tipoContacto);
+	// -- Tipos de Contacto --
+
+	public TipoContacto agregarTipoContacto(TipoContacto tipoContacto) {
+		return this.tipoContactoDAO.insert(tipoContacto);
 	}
 	
-	public void actualizarTipoContacto(TipoContacto tipoContacto) {
-		this.tipoContactoDAO.update(tipoContacto);
+	public TipoContacto actualizarTipoContacto(TipoContacto tipoContacto) {
+		return this.tipoContactoDAO.update(tipoContacto);
 	}
 
 	public void borrarTipoContacto(TipoContacto tipoContacto) {
@@ -70,12 +74,14 @@ public class Agenda
 		return this.tipoContactoDAO.readAll();
 	}
 
-	public void agregarPais(PaisDTO pais) {
-		this.paisDAO.insert(pais);
+	// -- Países --
+
+	public PaisDTO agregarPais(PaisDTO pais) {
+		return this.paisDAO.insert(pais);
 	}
 	
-	public void actualizarPais(PaisDTO pais) {
-		this.paisDAO.update(pais);
+	public PaisDTO actualizarPais(PaisDTO pais) {
+		return this.paisDAO.update(pais);
 	}
 
 	public void borrarPais(PaisDTO pais) {
@@ -86,12 +92,14 @@ public class Agenda
 		return this.paisDAO.readAll();
 	}
 
-	public void agregarProvincia(ProvinciaDTO provincia) {
-		this.provinciaDAO.insert(provincia);
+	// -- Provincias --
+
+	public ProvinciaDTO agregarProvincia(ProvinciaDTO provincia) {
+		return this.provinciaDAO.insert(provincia);
 	}
 	
-	public void actualizarProvincia(ProvinciaDTO provincia) {
-		this.provinciaDAO.update(provincia);
+	public ProvinciaDTO actualizarProvincia(ProvinciaDTO provincia) {
+		return this.provinciaDAO.update(provincia);
 	}
 
 	public void borrarProvincia(ProvinciaDTO provincia) {
@@ -102,12 +110,14 @@ public class Agenda
 		return this.provinciaDAO.readAll();
 	}
 
-	public void agregarLocalidad(LocalidadDTO localidad) {
-		this.localidadDAO.insert(localidad);
+	// -- Localidades --
+
+	public LocalidadDTO agregarLocalidad(LocalidadDTO localidad) {
+		return this.localidadDAO.insert(localidad);
 	}
 	
-	public void actualizarLocalidad(LocalidadDTO localidad) {
-		this.localidadDAO.update(localidad);
+	public LocalidadDTO actualizarLocalidad(LocalidadDTO localidad) {
+		return this.localidadDAO.update(localidad);
 	}
 
 	public void borrarLocalidad(LocalidadDTO localidad) {
