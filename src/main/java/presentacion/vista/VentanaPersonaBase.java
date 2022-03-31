@@ -47,8 +47,7 @@ public abstract class VentanaPersonaBase extends JFrame {
 	protected JButton btnAceptar;
 	protected MaskFormatter mask;
 
-	protected VentanaPersonaBase(String title)
-	{
+	protected VentanaPersonaBase(String title) {
 		super(title);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -191,7 +190,7 @@ public abstract class VentanaPersonaBase extends JFrame {
 
 		jComboBoxProvincia.addActionListener(l -> this.filtrarLocalidadesPorProvincia());
 
-		modelLocalidades= new DefaultComboBoxModel<LocalidadDTO>();
+		modelLocalidades = new DefaultComboBoxModel<LocalidadDTO>();
 		jComboBoxLocalidad = new JComboBox<>(modelLocalidades);
 		jComboBoxLocalidad.setBounds(133, 459, 164, 20);
 		panel.add(jComboBoxLocalidad);
@@ -218,7 +217,8 @@ public abstract class VentanaPersonaBase extends JFrame {
 		if (paisSeleccionado == null)
 			return;
 
-		DefaultComboBoxModel<ProvinciaDTO> model = (DefaultComboBoxModel<ProvinciaDTO>) this.jComboBoxProvincia.getModel();
+		DefaultComboBoxModel<ProvinciaDTO> model = (DefaultComboBoxModel<ProvinciaDTO>) this.jComboBoxProvincia
+				.getModel();
 		model.removeAllElements();
 
 		for (ProvinciaDTO provincia : paisSeleccionado.getProvincias())
@@ -231,15 +231,15 @@ public abstract class VentanaPersonaBase extends JFrame {
 		if (provinciaSeleccionada == null)
 			return;
 
-		DefaultComboBoxModel<LocalidadDTO> model = (DefaultComboBoxModel<LocalidadDTO>) this.jComboBoxLocalidad.getModel();
+		DefaultComboBoxModel<LocalidadDTO> model = (DefaultComboBoxModel<LocalidadDTO>) this.jComboBoxLocalidad
+				.getModel();
 		model.removeAllElements();
 
 		for (LocalidadDTO localidad : provinciaSeleccionada.getLocalidades())
 			model.addElement(localidad);
 	}
 
-	public void mostrarVentana(PersonaDTO personaDTO)
-	{
+	public void mostrarVentana(PersonaDTO personaDTO) {
 		this.txtNombre.setText(personaDTO.getNombre());
 		this.txtTelefono.setText(personaDTO.getTelefono());
 		this.txtEmail.setText(personaDTO.getEmail());
@@ -291,7 +291,7 @@ public abstract class VentanaPersonaBase extends JFrame {
 
 	public void llenarComboMesNacimiento() {
 		this.jComboBoxMesNacimiento.removeAllItems();
-		String[] Meses = new String[] { null, "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+		String[] Meses = new String[] { " ", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
 				"Septiembre", "Octubre", "Noviembre", "Diciembre" };
 		for (String mes : Meses)
 			jComboBoxMesNacimiento.addItem(mes);
@@ -340,7 +340,7 @@ public abstract class VentanaPersonaBase extends JFrame {
 	public JTextField getTxtPlataformaAlmacenamiento() {
 		return txtPlataformaAlmacenamiento;
 	}
-	
+
 	public JComboBox<PaisDTO> getJComboPais() {
 		return jComboBoxPais;
 	}
@@ -365,8 +365,7 @@ public abstract class VentanaPersonaBase extends JFrame {
 		return this.modelLocalidades;
 	}
 
-	public void cerrar()
-	{
+	public void cerrar() {
 		this.txtNombre.setText(null);
 		this.txtTelefono.setText(null);
 		this.txtEmail.setText(null);
