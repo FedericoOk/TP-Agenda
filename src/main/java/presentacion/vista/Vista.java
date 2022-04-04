@@ -35,6 +35,7 @@ public class Vista {
 	private JButton btnReporte2;
 	private JMenuItem menuItemTipoContacto;
 	private JMenuItem menuItemUbicaciones;
+	private JMenuItem menuItemConfiguration;
 	private DefaultTableModel modelPersonas;
 	private JComboBox<String> jComboBoxSort;
 	private String[] nombreColumnas = { "Nombre y apellido", "Telefono", "Email", "Nacimiento", "TipoContacto" };
@@ -70,6 +71,12 @@ public class Vista {
 
 		menuItemUbicaciones = new JMenuItem("Ubicaciones");
 		menu.add(menuItemUbicaciones);
+
+		JMenu configMenu = new JMenu("Configuración");
+		menuBar.add(configMenu);
+
+		menuItemConfiguration = new JMenuItem("Conexión DB");
+		configMenu.add(menuItemConfiguration);
 
 		modelPersonas = new DefaultTableModel(null, nombreColumnas);
 		tablaPersonas = new JTable(modelPersonas);
@@ -177,6 +184,10 @@ public class Vista {
 
 	public JMenuItem getMenuItemUbicaciones() {
 		return menuItemUbicaciones;
+	}
+
+	public JMenuItem getMenuItemConfiguracion() {
+		return menuItemConfiguration;
 	}
 
 	public JComboBox<String> getComboSort() {
